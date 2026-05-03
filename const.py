@@ -1,0 +1,34 @@
+from datetime import timedelta
+
+DOMAIN = "lemmens_tac5"
+DEFAULT_NAME = "Lemmens TAC5"
+DEFAULT_PORT = 502
+DEFAULT_SCAN_INTERVAL = timedelta(seconds=10)
+
+CONF_HOST = "host"
+CONF_PORT = "port"
+
+REG_OPERATING_MODE = 51         
+REG_VENTILATION_POSITION = 52   
+REG_SUPPLY_SETPOINT = 55        
+REG_EXHAUST_SETPOINT = 56       
+
+REG_SUPPLY_AIRFLOW_1 = 64       
+REG_SUPPLY_PRESSURE_1 = 65      
+REG_EXHAUST_AIRFLOW_1 = 72      
+REG_EXHAUST_PRESSURE_1 = 73     
+
+REG_AIRFLOW_SETTING_1 = 427
+REG_AIRFLOW_SETTING_2 = 428
+REG_AIRFLOW_SETTING_3 = 429
+
+REG_BYPASS_STATUS = 83          
+REG_BYPASS_OVERRIDE = 222
+REG_TEMP_T1 = 154               
+REG_TEMP_T2 = 155               
+REG_TEMP_T3 = 156               
+REG_TEMP_T5 = 158               
+REG_ALARM_1 = 299               
+REG_ALARM_2 = 300               
+REG_CTRL_MODBUS_MASTER = 199    
+REG_CTRL_VENT_POSITION = 200    

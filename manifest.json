@@ -1,0 +1,11 @@
+{
+    "domain": "lemmens_tac5",
+    "name": "Lemmens TAC5 VMC",
+    "codeowners": ["@user"],
+    "config_flow": true,
+    "dependencies": [],
+    "documentation": "https://github.com/user/lemmens_tac5",
+    "iot_class": "local_polling",
+    "requirements": ["pymodbus"],
+    "version": "1.0.0"
+}
