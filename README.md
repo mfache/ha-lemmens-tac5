@@ -23,3 +23,10 @@ This integration supports setup via the UI.
 1. Go to Settings -> Devices & Services.
 2. Click "Add Integration" and search for "Lemmens TAC5 VMC".
 3. Enter the IP address and the Modbus port (default: 502) of your ventilation unit.
+
+## Removal Instructions
+1. Navigate to Settings -> Devices & Services.
+2. Select the "Lemmens TAC5 VMC" integration.
+3. Click the three dots (overflow menu) and select "Delete".
+4. If installed via HACS, navigate to HACS -> Integrations, select the integration, click the overflow menu, and select "Remove".
+5. Restart Home Assistant.

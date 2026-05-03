@@ -3,7 +3,7 @@ from homeassistant.const import UnitOfTemperature, UnitOfVolumeFlowRate, UnitOfP
 from .const import DOMAIN
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = entry.runtime_data
 
     sensors = [
         LemmensSensor(coordinator, entry.entry_id, "t1", "Fresh Air Temp (T1)", SensorDeviceClass.TEMPERATURE, UnitOfTemperature.CELSIUS),
@@ -23,6 +23,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
     async_add_entities(sensors)
 
 class LemmensSensor(SensorEntity):
+    _attr_has_entity_name = True
+
     def __init__(self, coordinator, entry_id, key, name, device_class, unit):
         self.coordinator = coordinator
         self.key = key
@@ -30,7 +32,7 @@ class LemmensSensor(SensorEntity):
         self._attr_unique_id = f"{entry_id}_{key}"
         self._attr_device_class = device_class
         self._attr_native_unit_of_measurement = unit
-
+        
         if unit is not None:
             self._attr_state_class = SensorStateClass.MEASUREMENT
         else:
@@ -54,14 +56,9 @@ class LemmensSensor(SensorEntity):
             return options.get(val, val)
         if self.key == "mode" and val is not None:
             options = {
-                0: "OFF", 
-                1: "CA (Constant Airflow)", 
-                2: "LS (Link Speed)", 
-                3: "CPf (Constant Pressure)",
-                4: "CPs (Constant Pressure)",
-                5: "CAs (Constant Airflow)",
-                6: "TQ (Constant Torque)",
-                9: "INIT (Calibrage)"
+                0: "OFF", 1: "CA (Constant Airflow)", 2: "LS (Link Speed)", 
+                3: "CPf (Constant Pressure)", 4: "CPs (Constant Pressure)",
+                5: "CAs (Constant Airflow)", 6: "TQ (Constant Torque)", 9: "INIT (Calibrage)"
             }
             return options.get(val, val)
             

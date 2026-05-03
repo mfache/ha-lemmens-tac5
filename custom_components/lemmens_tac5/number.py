@@ -3,15 +3,17 @@ from homeassistant.const import UnitOfVolumeFlowRate
 from .const import DOMAIN, REG_AIRFLOW_SETTING_1
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    coordinator = hass.data[DOMAIN][entry.entry_id]
-
+    coordinator = entry.runtime_data
+    
     numbers = [
         LemmensAirflowNumber(coordinator, entry.entry_id, "airflow_1", "Airflow Setting Speed I", REG_AIRFLOW_SETTING_1),
     ]
-
+    
     async_add_entities(numbers)
 
 class LemmensAirflowNumber(NumberEntity):
+    _attr_has_entity_name = True
+
     def __init__(self, coordinator, entry_id, key, name, register):
         self.coordinator = coordinator
         self.key = key
@@ -23,7 +25,6 @@ class LemmensAirflowNumber(NumberEntity):
         self._attr_native_min_value = 0
         self._attr_native_max_value = 1500
         
-        # Display as input box instead of slider
         self._attr_mode = NumberMode.BOX
 
         self._attr_device_info = {

@@ -5,12 +5,14 @@ BYPASS_MAP = {"0": "Auto", "1": "Ouverture Forcée", "2": "Fermeture Forcée"}
 REV_BYPASS_MAP = {v: int(k) for k, v in BYPASS_MAP.items()}
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    coordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator = entry.runtime_data
     async_add_entities([
         LemmensBypassOverrideSelect(coordinator, entry.entry_id)
     ])
 
 class LemmensBypassOverrideSelect(SelectEntity):
+    _attr_has_entity_name = True
+
     def __init__(self, coordinator, entry_id):
         self.coordinator = coordinator
         self._attr_name = "Bypass Override"
