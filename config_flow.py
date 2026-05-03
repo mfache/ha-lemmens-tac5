@@ -12,7 +12,7 @@ class LemmensConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return self.async_create_entry(title=DEFAULT_NAME, data=user_input)
 
         data_schema = vol.Schema({
-            vol.Required(CONF_HOST, default="192.168.1.55"): str,
+            vol.Required(CONF_HOST, default="192.168.1.xxx"): str,
             vol.Required(CONF_PORT, default=DEFAULT_PORT): int,
         })
 
