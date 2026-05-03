@@ -6,6 +6,8 @@ from .const import *
 
 _LOGGER = logging.getLogger(__name__)
 
+REG_UNBALANCE_RATIO = 426
+
 class LemmensCoordinator(DataUpdateCoordinator):
     def __init__(self, hass, host, port, update_interval):
         super().__init__(
@@ -51,7 +53,11 @@ class LemmensCoordinator(DataUpdateCoordinator):
             if not airflow_result.isError():
                 data["airflow_1"] = airflow_result.registers[0]
                 
-            # Lecture override bypass (registre 222)
+            # Lecture ratio desequilibre (registre 40427 -> 426)
+            ratio_res = await self.client.read_holding_registers(REG_UNBALANCE_RATIO, count=1)
+            if not ratio_res.isError():
+                data["unbalance_ratio"] = ratio_res.registers[0]
+                
             bypass_ov_res = await self.client.read_holding_registers(REG_BYPASS_OVERRIDE, count=1)
             if not bypass_ov_res.isError():
                 data["bypass_override"] = bypass_ov_res.registers[0]
@@ -78,7 +84,6 @@ class LemmensCoordinator(DataUpdateCoordinator):
                 await self.client.connect()
             result = await self.client.write_register(address, value)
             if result.isError():
-                # fallback for multiwrite
                 result = await self.client.write_registers(address, [value])
                 
             if result.isError():
