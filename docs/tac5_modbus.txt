@@ -1,0 +1,3660 @@
+  
+ 
+ 
+ 
+ 
+ 
+ 
+TAC5 + MODBUS TABLE  
+  
+ 
+ 
+ 
+
+                                      
+ 
+ 
+  
+                                      
+ 
+                         
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+TAC5 + MODBUS TABLE 
+ 
+ 
+Installation and user’s manual 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+
+                                      
+ 
+ 
+ 
+TABLE OF CONTENTS 
+ 
+ 
+1 Scope ..................................................................................................................................................................... 5 
+2 Modbus map overview .......................................................................................................................................... 5 
+3 Use of MODBUS commands ................................................................................................................................ 6 
+3.1 MODBUS Address ........................................................................................................................................ 6 
+3.2 MODBUS Commands for TAC5 DG/DM/DT regulation ................................................................................. 6 
+3.2.1 Fans working modes on TAC5 DG/DM/DT............................................................................................... 6 
+3.2.2 Viewing of fan data on TAC5 DG/DM/DT: ................................................................................................ 8 
+3.2.3 Viewing temperatures on TAC5 DG/DM/DT: ............................................................................................ 9 
+3.2.4 Pressure Alarm on TAC5 DG/DM/DT: ...................................................................................................... 9 
+3.2.5 Fire alarm on TAC5 DG/DM/DT: ............................................................................................................ 10 
+3.2.6 Bypass on TAC5 DG/DM/DT: ................................................................................................................. 10 
+3.2.7 Boost on TAC5 DG/DM/DT: ................................................................................................................... 11 
+3.2.8 Post-heating – internal coil (NV or KWout option) on TAC5 DG/DT: ...................................................... 11 
+3.2.9 Post-heating or cooling: external coil (SAT BA/KW OPTION) on TAC5 DG/DM/DT: ............................. 12 
+3.2.10 Run time and maintenance alarms on TAC5 DG/DM/DT: ...................................................................... 12 
+3.2.11 Operating with time tables on TAC5 DG/DM/DT: ................................................................................... 14 
+3.2.12 Seasonal programming on TAC5 DG/DM/DT: ........................................................................................ 14 
+3.2.13 Advanced setup on TAC5 DG/DM/DT .................................................................................................... 14 
+3.3 MODBUS commands for TAC5 SC/F regulation ......................................................................................... 15 
+3.3.1 Fans setup on TAC5 SC/F ..................................................................................................................... 15 
+3.3.2 Fans working modes on TAC5 SC/F ...................................................................................................... 15 
+3.3.3 Viewing of fan data on TAC5 SC/F: ........................................................................................................ 18 
+3.3.4 Pressure Alarm on TAC5 SC/F: ............................................................................................................. 18 
+3.3.5 Fire alarm on TAC5 SC/F: ...................................................................................................................... 19 
+3.3.6 Boost on TAC5 SC/F: ............................................................................................................................. 19 
+3.3.7 Post-heating or cooling: external coil (SAT BA/KW OPTION) on TAC5 SC: .......................................... 19 
+3.3.8 Run time and maintenance alarms on TAC5 SC/F: ................................................................................ 20 
+3.3.9 Operating with time tables on TAC5 SC/F: ............................................................................................. 20 
+3.3.10 Seasonal programming on TAC5 SC: .................................................................................................... 20 
+3.3.11 Advanced setup on TAC5 SC/F ............................................................................................................. 20 
+4 Detailed MODBUS table ...................................................................................................................................... 21 
+4.1 General info ................................................................................................................................................. 21 
+4.2 Specific Tables for TAC5 DG/DM/DT regulations ........................................................................................ 22 
+4.2.1 Visualization on TAC5 DG/DM/DT ......................................................................................................... 22 
+4.2.2 Control on TAC5 DG/DM/DT .................................................................................................................. 26 
+4.2.3 Alarms on TAC5 DG/DM/DT .................................................................................................................. 28 
+4.2.4 SETUP parameters on TAC5 DG/DM/DT............................................................................................... 30 
+4.2.5 ADVANCED SETUP parameters on TAC5 DG/DM/DT .......................................................................... 33 
+4.2.6 Time scheduler on TAC5 DG/DM/DT ..................................................................................................... 37 
+4.2.7 Season management on TAC5 DG/DM/DT ............................................................................................ 39 
+4.3 Specific Tables for TAC5 SC/F regulation ................................................................................................... 40 
+4.3.1 Visualization on TAC5 SC/F ................................................................................................................... 40 
+4.3.2 Control on TAC5 SC/F............................................................................................................................ 43 
+4.3.3 Alarms on TAC5 SC/F ............................................................................................................................ 45 
+4.3.4 SETUP parameters on TAC5 SC/F ........................................................................................................ 46 
+4.3.5 ADVANCED SETUP parameters on TAC5 SC/F ................................................................................... 49 
+4.3.6 Time scheduler on TAC5 SC/F ............................................................................................................... 51 
+4.3.7 Season management on TAC5 SC ........................................................................................................ 53 
+ 
+5 
+ 
+1 Scope 
+ 
+Description and details of Modbus tables and registers for Modbus RTU or TCP/IP communication between a BMS 
+(master) and the control boards (slaves): TAC5 DG for HRglobal/HRup/HRflat/HRclassunit units, DT for HRtotal, DM for 
+HRmural, TAC5 SC for single flow COMPO units and TAC5 F for controlling one or two fans (forward or backward).  
+ 
+The MODBUS communication with TAC5 control boards requires an additional satellite circuit which is used as 
+communication interface: 
+ 
+- MODBUS RTU communication protocol:  
+• SAT MODBUS Option: 
+▪ On RS-485 physical network. 
+▪ Details in « MI Regulation TAC5 + Modbus RTU » manual. 
+ 
+- MODBUS TCP/IP communication protocol: 
+• SAT WIFI Option: 
+▪ On wireless Wi-Fi network. 
+▪ Details in « MI Regulation TAC5 + Modbus TCP/IP » manual. 
+ 
+• SAT ETHERNET Option:  
+▪ On Ethernet over twisted pair 10 BASE T/100Base-TX IEEE 802.3 network. 
+▪ Details in « MI Regulation TAC5 + Modbus TCP/IP » manual. 
+ 
+ 
+The features of each TAC5 regulation are plainly explained in their specific user manuals. 
+ 
+2 Modbus map overview 
+ 
+The TAC5 regulation can be entirely monitored by the MODBUS communication.  
+The MODBUS table can thus configure the SETUP, advanced SETUP, the display setup of all parameters and the 
+control of the operation of the unit (airflows and temperatures). 
+ 
+The MODBUS table is structured as follows: 
+ 
+Registers Group Read/Write 
+40001 … General info.  
+Provides general information about the system. 
+Read only 
+40020 … 
+40050 … 
+40150 … 
+Visualization. 
+Shows actual values of a number of setup 
+parameters and unit parameters (flows, pressures, 
+inputs and outputs). 
+Read only 
+40200 … Control. 
+Control speed by different sources. 
+Control of functionalities like bypass, fire alarm, post-
+heating,). 
+Run initialization of pressure parameters. 
+Control of resets  
+Read and write 
+40300 … Alarms. 
+Bitmap with alarm flags. 
+Read only 
+40400 … Setup parameters. Read and write 
+40500 … Advanced Setup parameters. Read and write 
+41000 … Time table configuration parameters. Read and write 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 6 
+3 Use of MODBUS commands 
+ 
+The MODBUS Communication gives access to all the parameters of the regulation. You will find below the MODBUS 
+registers associated with the principal functionalities of the TAC5 regulation divided between TAC5 DG/DM/DT for 
+controlling the counter flow units on one side and the TAC5 SC/F regulations for single flow units on the other side. For 
+more details on these registers or for complete information on the parameters accessible via MODBUS, see the 
+complete table in §4. 
+ 
+ 
+3.1 MODBUS Address 
+ 
+Default MODBUS Address of a TAC5 circuit is “1”. 
+It is possible to modify this value via a MODBUS command (40543). 
+Caution: only connect to the network TAC5 circuits with different addresses 
+ 
+Setup: 
+Description Register 
+Modification of MODBUS address 40543 
+ 
+ 
+ 
+3.2 MODBUS Commands for TAC5 DG/DM/DT regulation 
+ 
+3.2.1 Fans working modes on TAC5 DG/DM/DT 
+ 
+ 
+3.2.1.1 CA MODE – airflows are continuously being sent by MODBUS: 
+ 
+The CA mode is available only if fan airflow modulation is selected (register 40608 = 0). Units without CA kit cannot use 
+airflow modulation, excepted those equipped with forward fans. 
+ 
+Setup: 
+Description Register 
+Set MODBUS as master of airflow control 40200 
+ 
+Control: 
+Description Register 
+Enter supply airflow  40204 
+Enter exhaust airflow 40205 
+ 
+ 
+  
+3.2.1.2 CA Mode – 3 airflow set points: 
+ 
+Setup: 
+Description Register 
+Select CA mode 40426 
+Select Airflow set point 1 40428 
+Select Airflow set point 2 40429 
+Select Airflow set point 3 40430 
+Airflow unbalance ratio exhaust/supply 40427 
+ 
+Control: 
+Description Register 
+MODBUS is master of airflow set point position 40200 
+Selection of airflow set point position (OFF, I, II or III) 40201 
+ 
+  
+ 
+7 
+3.2.1.3 TQ MODE – percentage of maximum fan torque are continuously being sent by MODBUS: 
+ 
+The TQ and CA mode being mutually exclusive, the mode CA registers are used for TQ mode. 
+ 
+Setup: 
+Description Register 
+Set MODBUS as master of torque control 40200 
+ 
+Control: 
+Description Register 
+Enter the percentage of supply fan torque 40204 
+Enter the percentage of exhaust fan torque 40205 
+ 
+ 
+ 
+3.2.1.4  TQ MODE– 3 set points for fan torque percentages: 
+ 
+The TQ mode is available only if the modulation of percentage of maximum fan torque is selected (register 40608 = 1). 
+Tis is always the case for units without CA kit and not equipped with forward fans. 
+ 
+Setup: 
+Description Register 
+Select TQ mode 40426 
+Select fan torque percentage set point 1 40428 
+Select fan torque percentage set point 2 40429 
+Select fan torque percentage set point 3 40430 
+Torques unbalance ratio exhaust/supply 40427 
+ 
+Control: 
+Description Register 
+MODBUS is master of torque set point position 40200 
+Selection of torque set point position (OFF, I, II or III) 40201 
+ 
+ 
+ 
+3.2.1.5 LS MODE: 
+ 
+The magnitude that the regulation board will modulate in function of the signal voltage is normally the airflow unless that 
+the unit has backward fans without pressure sensor, or when the forced TQ mode has been configured, then the 
+percentage of the maximum fan torque will be modulated. In this last case, no computed pressure alarm will be available. 
+Please, refer to the specific regulation manual for further details. 
+ 
+Setup: 
+Description Register 
+Select LS mode 40426 
+Select minimum signal (Vmin) 40438 
+Select maximum signal (Vmax) 40439 
+Select airflow (or % max torque) corresponding to Vmin 40440 
+Select airflow (or % max torque) corresponding to Vmax 40441 
+Select unbalance ratio exhaust/supply 40427 
+Select sleep mode reduction for position III. 40442 
+  
+Possibility to stop the fans below a certain voltage threshold 40500 
+Value of the voltage lower threshold 40501 
+Possibility to stop the fans above a certain threshold 40502 
+Value of the voltage upper threshold 40503 
+  
+Possibility to manage another signal connected on K3 40505 
+Possibility to assign the signal on K3 either to the exhaust flow (by 
+default) or to the supply 
+40584 
+ 
+Control: 
+Description Register 
+Set MODBUS as master of ventilation position 40200 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 8 
+Select ventilation position (OFF, I or III) 40201 
+ 
+ 
+3.2.1.6 CPs MODE: 
+ 
+The magnitude that the regulation board will modulate to keep the pressure constant is normally the airflow unless that 
+the unit has backward fans without pressure sensor, or when the forced TQ mode has been configured, then the 
+percentage of the maximum fan torque will be modulated. Please, refer to the specific regulation manual for further 
+details. 
+ 
+Setup: 
+Description Register 
+Select CPs mode 40426 
+Choice of the flow of regulation (supply and/or extraction) 40443 
+  
+If CPs applied to one airflow side, supply or exhaust   
+Select unbalance ratio exhaust/supply 40427 
+Select sleep mode reduction for position III. 40442 
+If manual configuration:  
+Select assignment value to be kept constant 40446 
+If configuration via initialization procedure:  
+Select initialization airflow (or % max torque)   40254 
+If CPs on 2 flows: supply and exhaust  
+If manual configuration:  
+Enter set point value to be kept constant in the supply airflow 40446 
+Enter set point value to be kept constant in the exhaust airflow 40449 
+If configuration via nominal airflow procedure:  
+Enter nominal supply airflow (or % max torque) for initialization 
+procedure  
+40254 
+Enter nominal exhaust airflow (or % max torque) for initialization 
+procedure  
+40257 
+  
+Start initialization procedure and pressure measurement 40256 
+Alarm while initialization procedure of set point pressure value  40302-bit 12 to 15 
+40303- bit 0 to 3 
+ 
+Control: 
+Description Register 
+Set MODBUS as master of ventilation position 40200 
+Select ventilation position (OFF, I or III) 40201 
+ 
+ 
+ 
+3.2.2 Viewing of fan data on TAC5 DG/DM/DT: 
+ 
+Description Register 
+Operating mode 40052 
+Ventilation Position (OFF, I, II, III) 40053 
+Supply set point 40056 
+Exhaust set point 40057 
+Actual airflow (or % max torque) on supply fan 1 40065 
+Actual pressure on supply fan 1 40066 
+Actual airflow (or % max torque) on supply fan 2 40069 
+Actual pressure on supply fan 2 40070 
+Actual airflow (or % max torque) on exhaust fan 1 40073 
+Actual pressure on exhaust fan 1 40074 
+Actual airflow (or % max torque) on exhaust fan 2 40077 
+Actual pressure on exhaust fan 2 40078 
+Fan failure alarm 40300 - bit 2 to 5 
+ 
+ 
+ 
+  
+ 
+9 
+3.2.3 Viewing temperatures on TAC5 DG/DM/DT: 
+ 
+Description Register 
+Inlet Temperature of fresh air (from outside): T1 40155 
+Inlet Temperature of stale air (from the interior): T2 40156 
+Exhaust air temperature after heat exchanger (towards outside): T3 40157 
+Water coil temperature (NV option): T4 40158 
+Supply air temperature after heat exchanger (towards inside): T5 40159 
+Hot water coil temperature (BA+ or BA+/- option): T7 40161 
+Cold water coil temperature (BA-, BAin option): T8 40162 
+Temperature sensor default alarm 40300 – bit 8 à 15 
+40301 – bit 0 à 7 
+ 
+ 
+ 
+3.2.4 Pressure Alarm on TAC5 DG/DM/DT: 
+ 
+Setup: 
+Description Register 
+Pressure alarm activation 40431 
+Select delta P for pressure alarm on supply airflow 40432 
+Select delta P for pressure alarm on exhaust airflow 40433 
+Stop the unit if pressure alarm 40500 
+If manual configuration:  
+Select reference airflow to determine pressure alarm threshold on 
+supply side 
+40434 
+Select reference pressure to determine alarm threshold on supply 
+side  
+40435 
+Select reference airflow to determine pressure alarm threshold on 
+exhaust side 
+40436 
+Select reference pressure to determine alarm threshold on exhaust 
+side 
+40437 
+If configuration via initialisation:  
+Select initialization airflow 40254 
+Start initialization procedure to measure pressure 40253 
+Initialization can last for 1 to 3 minutes (according to stabilization of 
+working point). After 1 minute the system will store the fan’s 
+calculated pressure value.  
+The operating mode register (40052) is temporarily set to « 9 » during 
+this initialization phase. 
+ 
+ 
+Alarm while initializing pressure set point  40302-bit 12 to 15 
+40303 - bit 0 to 3 
+ 
+Control: 
+Description Register 
+Activate « pressure alarm » status  40221 
+ 
+Visualization: 
+Description Register 
+Reference airflow for pressure alarm supply side 40061 
+Pressure for pressure alarm supply side 40062 
+Reference airflow for pressure alarm exhaust side 40063 
+Pressure for pressure alarm exhaust side 40064 
+  
+Status of pressure alarm on the supply and/or exhaust side(s) 40300- bit 6 & 7 
+Status of external pressure alarm  40303 - bit 6 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 10 
+3.2.5 Fire alarm on TAC5 DG/DM/DT: 
+ 
+Setup: 
+Description Register 
+Select contact logic (IN3 on TAC5 DG/DT, IN2 on TAC5 DM): 
+normally «open» or «closed» 
+40510 
+Select action (off/on) in case of fire alarm supply side 40226 
+Select ‘supply’ airflow (or % max torque) in case of fire alarm 40511 
+Select action (off/on) in case of fire alarm exhaust side 40227 
+Select ‘exhaust’ airflow (or % max torque) in case of fire alarm 40512 
+ 
+Control: 
+Description Register 
+Forcing status «fire alarm» 40222 
+ 
+Visualization: 
+Description Register 
+Fire alarm status 40303 – bit 7 & 8 
+ 
+ 
+ 
+3.2.6 Bypass on TAC5 DG/DM/DT: 
+ 
+There are two types of plates heat exchanger bypass: with all or nothing opening or with modulating opening (modulating 
+bypass) available only on TAC5 DG and TAC5 DT. For the modulating bypass, the freecooling feature will be available if 
+the setup modality is freecooling or antifreeze + freecooling. Please, refer to the specific regulation manual for further 
+details. 
+ 
+Setup: 
+Description Register 
+Select outside temperature threshold to open bypass 40513 
+Select inside temperature threshold to open bypass 40514 
+Force special airflow (or % max torque) when bypass open 40515 
+Select supply airflow (or % max torque) when bypass open 40516 
+Select exhaust airflow (or % max torque) when bypass open 40517 
+If modulating bypass: freecooling temperature set point 40454 
+If modulating bypass: modulating bypass modality (0=antifreeze, 
+1=freecooling, 2 = antifreeze + freecooling) 
+40562 
+ 
+Control: 
+Description Register 
+Force open bypass status (even when conditions not met) 40223 
+If modulating bypass: force the degree of bypass opening 40258 
+ 
+Visualization: 
+Description Register 
+Bypass status 40084 
+If modulating bypass: degree of bypass opening 40091 
+ 
+ 
+  
+ 
+11 
+3.2.7 Boost on TAC5 DG/DM/DT: 
+ 
+Setup: 
+Description Register 
+Enter BOOST supply airflow (or % max torque) rate when activated 40548 
+Enter BOOST exhaust airflow (or % max torque) rate when activated 40549 
+Possibility to activate boost by contact (default) or by relative humidity 
+rate (%RH) through a 0-10V humidity sensor connected on K3. 
+40577 
+If boost by %RH, definition of the relative humidity rate for activation 40578 
+If boost by %RH, definition of the relative humidity rate for 
+deactivation 
+40579 
+If boost by %RH, minimum signal (Vmin) sent back by the humidity 
+sensor 
+40580 
+If boost by %RH, maximum signal (Vmax) sent back by the humidity 
+sensor 
+40581 
+If boost by %RH, choice of the relative humidity rate corresponding to 
+Vmin 
+40582 
+If boost by %RH, choice of the relative humidity rate corresponding to 
+Vmax 
+40583 
+ 
+Control: 
+Description Register 
+Force activation of « BOOST » airflow 40228 
+ 
+ 
+3.2.8 Post-heating – internal coil (NV or KWout option) on TAC5 DG/DT: 
+ 
+Setup: 
+Description Register 
+Choice of the comfort temperature regulation from the measured 
+value of the supply T° (comfort on T5, default) or of the 
+extract/ambient T° (comfort on T2) 
+40570 
+Select comfort air T° set point 40425 
+ 
+Control: 
+Description Register 
+De-activate post heating function 40225 
+ 
+Visualization: 
+Description Register 
+Comfort air T° assignment 40059 
+If NV option: %age of opening of 3-way valve 40172 
+If KWout option: power %age of KWout coil 40187 
+Extract air temperature (T°2)  40156 
+Supply air temperature (T°5)  40159 
+Antifreeze status of internal water coil  40083 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 12 
+3.2.9 Post-heating or cooling: external coil (SAT BA/KW OPTION) on TAC5 DG/DM/DT: 
+ 
+Setup: 
+Description Register 
+Choice of the comfort temperature regulation from the measured 
+value of the supply T° (comfort on T5, default) or of the 
+extract/ambient T° (comfort on T2) 
+40570 
+Choose external coil type 40550 
+Enter comfort airflow set point temperature for heating  40425 
+Enter comfort airflow set point temperature for cooling 40447 
+ 
+Control: 
+Description Register 
+Disable post-heating 40225 
+Disable post- cooling 40229 
+Select heating or cooling method 40230 
+ 
+Visualization: 
+Description Register 
+Actual comfort air T° set point (cool or heat)  40059 
+If BA+ or BA+/- option: %age opening of 3-way valve 40174 
+If BA- option: %age opening of 3-way valve 40175 
+If KWext option: actual %age of maximum capacity of KW coil 40188 
+Extract air temperature (T°2)  40156 
+Actual Supply ait T°(T°5)  40159 
+Antifreeze status of external water coils 40088 
+ 
+ 
+3.2.10 Post-heating and cooling: automatic changeover between heat and cool: 
+ 
+Setup: 
+Description Register 
+Enable automatic changeover between heat and cool 40589 
+Select the high neutral band for changeover 40590 
+Select the low neutral band for changeover  40591 
+ 
+Visualization: 
+Description Register 
+Changeover status  40098 
+ 
+ 
+ 
+ 
+3.2.11 Run time and maintenance alarms on TAC5 DG/DM/DT: 
+ 
+Setup: 
+Description Register 
+Activate run time logging 40534 
+Display run time on RC TAC5 40535 
+Activate maintenance alarm based on fan running hours 40536 
+Hours count limit for maintenance alarm based on fan running hours 40537 
+Activate maintenance alarm based on fan running hours with a fan 
+stop 
+40539 
+Hours count limit for maintenance alarm based on fan running hours 
+with fan stop 
+40540 
+Hours count for minor maintenance alarm based on elapsed time 40457 
+Hours count for major maintenance alarm based on elapsed time 40458 
+ 
+Control: 
+Description Register 
+RESET fan running hours count 40252 
+RESET minor maintenance hours count 40260 
+RESET major maintenance hours count 40261 
+ 
+ 
+13 
+Visualization: 
+Description Register 
+Fan running hours count of unit 40081 
+Minor maintenance hours count of unit 40096 
+Major maintenance hours count of unit 40109 
+Status of maintenance alarm based on fan running hours 40303 – bit 4 & 5 
+Status of minor maintenance alarm based on elapsed time 40304 – bit 10 
+Status of major maintenance alarm based on elapsed time 40304 – bit 13 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 14 
+3.2.12 Operating with time tables on TAC5 DG/DM/DT: 
+ 
+TAC5 units can operate automatically according to a timetable. The timetable features 7 days/ 6 timeslots per day 
+programming. For each time slot, it is possible to configure the working mode and its different parameters, the supply air 
+T° set point (heating and cooling) and the status of the bypass.  
+ 
+Setup: 
+Description Register 
+See MODBUS §4.2.6 table below 41000..41417 
+ 
+Control: 
+Description Register 
+Enable automatic operation 40200 
+ 
+ 
+3.2.13 Seasonal programming on TAC5 DG/DM/DT: 
+ 
+3 features can be en/disabled during certain periods of the year: the bypass, the post-heating and the post-cooling. 
+Configure a time period between 2 dates and enter feature status (i.e. closed position for the Bypass and OFF for the 
+heating or cooling), regardless of the configuration and actual temperature values. 
+ 
+Setup: 
+Description Register 
+Enter time periods for BYPASS: see MODBUS table §4.2.7 below 41800..41803 
+Enter time periods for post-heating: see MODBUS table §4.2.7 below 41804..41807 
+Enter time periods for post-cooling: see MODBUS table §4.2.7 below 41808..41811 
+ 
+ 
+3.2.14 Advanced setup on TAC5 DG/DM/DT 
+ 
+Other parameters and advanced functionalities are accessible via MODBUS. They require a thorough knowledge of the 
+regulation.  You can find the details concerning these parameters in the detailed MODBUS table or in the document 
+associated with the specific regulation available on our www.swegon.com site: 
+ 
+- Fans start torque 
+- Prevent stop of the fans 
+- Configuration of AF (anti-frost) of coils 
+- Reaction speed of modifications on post-
+heating/cooling 
+- OUT1 and OUT2 definition  
+- In mode CPs: positive or negative logic 
+- In mode CPs: reaction speed of the CPs 
+- If comfort on T2 (on extract/ambient T°): 
+• comfort reaction speed 
+• upper and lower limit value of the 
+temperature reached in the supply duct. 
+- algorithm 
+- Post-ventilation configuration 
+- Access code configuration 
+- Factory reset 
+ 
+ 
+ 
+ 
+  
+ 
+15 
+3.3 MODBUS commands for TAC5 SC/F regulation 
+ 
+ 
+3.3.1 Fans setup on TAC5 SC/F 
+ 
+Description Register 
+FAN TYPES 
+32-bit value in 2 words 
+40421 
+40422 
+FANS number: 1 or 2 40423 
+If 2 fans: dependence selection of fan 2 relative to fan 1   
+- If 2 dependent fans where fan 2 airflow (or torque) is a 
+percentage of fan 1 airflow (or torque): 0 
+- If 2 independent fans with an own set point for each one: 2 
+40443 
+ 
+ 
+ 
+3.3.2 Fans working modes on TAC5 SC/F 
+ 
+ 
+3.3.2.1 CA MODE– airflows are continuously being sent by MODBUS: 
+ 
+Setup: 
+Description Register 
+Set MODBUS as master of airflow control 40200 
+ 
+Control: 
+Description Register 
+Enter fan 1 airflow  40204 
+Enter fan 2 airflow 40205 
+ 
+ 
+3.3.2.2  CA Mode – 3 airflow set points: 
+ 
+Setup: 
+Description Register 
+Select CA mode 40426 
+Select Airflow set point 1 for fan 1 40428 
+Select Airflow set point 2 for fan 1  40429 
+Select Airflow set point 3 for fan 1 40430 
+If 2 dependent fans  
+Airflow unbalance ratio F2/F1 40427 
+If 2 independent fans  
+Select Airflow set point 1 for fan 2  40451 
+Select Airflow set point 2 for fan 2  40452 
+Select Airflow set point 3 for fan 2  40453 
+ 
+Control: 
+Description Register 
+MODBUS is master of airflow set point position 40200 
+Selection of airflow set point position (OFF, I, II or III) 40201 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 16 
+3.3.2.3 TQ MODE – percentage of maximum fan are continuously being sent by MODBUS: 
+ 
+The TQ and CA mode being mutually exclusive, the mode CA registers are used for TQ mode. 
+ 
+Setup: 
+Description Register 
+Set MODBUS as master of torque control 40200 
+ 
+Control: 
+Description Register 
+Enter the percentage of fan 1 torque 40204 
+Enter the percentage of fan 2 torque 40205 
+3.3.2.4 TQ MODE– 3 set points for fan torque percentages: 
+ 
+Setup: 
+Description Register 
+Select TQ mode 40426 
+Select fan torque percentage set point 1 for fan 1 40428 
+Select fan torque percentage set point 2 for fan 1 40429 
+Select fan torque percentage set point 3 for fan 1 40430 
+If 2 dependent fans  
+Torques unbalance ratio fan2/fan1 40427 
+If 2 independent fans  
+Select fan torque percentage set point 1 for fan 2 40451 
+Select fan torque percentage set point 2 for fan 2 40452 
+Select fan torque percentage set point 3 for fan 2 40453 
+ 
+Control: 
+Description Register 
+MODBUS is master of torque set point position 40200 
+Selection of torque set point position (OFF, I, II or III) 40201 
+ 
+ 
+ 
+3.3.2.5 LS MODE: 
+ 
+The magnitude that the regulation board will modulate in function of the signal voltage is normally the airflow unless that 
+the unit has backward fans without pressure sensor, or when the forced TQ mode has been setup, then the percentage 
+of the maximum fan torque will be modulated. In this last case, no computed pressure alarm will be available. Please, 
+refer to the specific regulation manual for further details. 
+ 
+Setup: 
+Description Register 
+Select LS mode 40426 
+Select minimum signal (Vmin) 40438 
+Select maximum signal (Vmax) 40439 
+Select airflow (or % max torque) corresponding to Vmin 40440 
+Select airflow (or % max torque) corresponding to Vmax 40441 
+  
+Possibility to stop the fans below a certain voltage threshold 40500 
+Value of the voltage lower threshold 40501 
+Possibility to stop the fans above a certain threshold 40502 
+Value of the voltage upper threshold 40503 
+If 1 fan or 2 dependent fans  
+Select sleep mode reduction for position III. 40442 
+If 2 dependent fans  
+Select unbalance ratio fan2/fan1 40427 
+ 
+Control: 
+Description Register 
+Set MODBUS as master of ventilation position 40200 
+Select ventilation position (OFF, I or III) 40201 
+ 
+  
+ 
+17 
+3.3.2.6 CPs MODE: 
+ 
+The magnitude that the regulation board will modulate to keep the pressure constant is normally the airflow unless that 
+the unit has backward fans without pressure sensor, or when the forced TQ mode has been setup, then the percentage 
+of the maximum fan torque will be modulated. Please, refer to the specific regulation manual for further details. 
+ 
+Setup: 
+Description Register 
+Select CPs mode 40426 
+If manual configuration:  
+Select assignment value to be kept constant for fan 1 40446 
+If configuration via nominal airflow procedure:  
+Enter nominal fan 1 airflow (or % max torque) for initialization 
+procedure  
+40254 
+If 1 fan or 2 dependent fans  
+Select sleep mode reduction for position III. 40442 
+If 2 dependent fans  
+Select unbalance ratio F2/F1 40427 
+If 2 independent fans  
+If manual configuration:  
+Select assignment value to be kept constant for fan 2 40449 
+If configuration via nominal airflow procedure:  
+Enter nominal fan 2 airflow (or % max torque) for initialization 
+procedure  
+40257 
+  
+Start initialization procedure and pressure measurement 40256 
+Alarm while initialization procedure of set point pressure value  40302-bit 12 to 15 
+40303- bit 0 to 3 
+ 
+Control: 
+Description Register 
+Set MODBUS as master of ventilation position 40200 
+Select ventilation position (OFF, I or III) 40201 
+ 
+ 
+3.3.2.7 CPf MODE: 
+ 
+The magnitude that the regulation board will modulate to keep the pressure constant can only be the airflow. Please, 
+refer to the specific regulation manual for further details. 
+ 
+Setup: 
+Description Register 
+Select CPf mode 40426 
+If manual configuration:  
+Select assignment value to be kept constant for fan 1 40445 
+If configuration via nominal airflow procedure:  
+Enter nominal fan 1 airflow for initialization procedure 40254 
+  
+If 1 fan or 2 dependent fans  
+Select sleep mode reduction for position III. 40442 
+If 2 dependent fans  
+Select unbalance flows ratio F2/F1 40427 
+If 2 independent fans  
+If manual configuration:  
+Select assignment value to be kept constant for fan 2 40450 
+If configuration via nominal airflow procedure:  
+Enter nominal fan 2 airflow for initialization procedure 40257 
+  
+Start initialization procedure and pressure measurement 40255 
+Alarm while initialization procedure of set point pressure value  40302–bit 12 to 5 
+40303 – bit 0 to 3 
+ 
+ 
+ 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 18 
+Control: 
+Description Register 
+Set MODBUS as master of ventilation position 40200 
+Select ventilation position (OFF, I or III) 40201 
+ 
+ 
+3.3.3 Viewing of fan data on TAC5 SC/F: 
+ 
+Description Register 
+Operating mode 40052 
+Ventilation Position (OFF, I, II, III) 40053 
+Fan 1 set point 40056 
+Fan 2 set point 40057 
+Actual airflow (or % max torque) on fan 1 40065 
+Actual pressure on fan 1 40066 
+Actual airflow (or % max torque) on fan 2 40073 
+Actual pressure on fan 2 40074 
+Fan failure alarm 40300 - bit 2 to 5 
+ 
+ 
+3.3.4 Pressure Alarm on TAC5 SC/F: 
+ 
+Setup: 
+Description Register 
+Pressure alarm activation 40431 
+Select delta P for pressure alarm on fan 1 40432 
+Select delta P for pressure alarm on fan 2 40433 
+Stop the unit if pressure alarm 40500 
+If manual configuration:  
+Select reference airflow to determine pressure alarm threshold on fan 
+1 
+40434 
+Select reference pressure to determine alarm threshold on fan 1 40435 
+Select reference airflow to determine pressure alarm threshold on fan 
+2 
+40436 
+Select reference pressure to determine alarm threshold on fan 2 40437 
+If configuration via initialisation:  
+Select initialization airflow 40254 
+Start initialization procedure to measure pressure 40253 
+Initialization can last for 1 to 3 minutes (according to stabilization of 
+working point). After 1 minute the system will store the fan’s 
+calculated pressure value.  
+The operating mode register (40052) is temporarily set to « 9 » during 
+this initialization phase. 
+ 
+ 
+Alarm while initializing pressure set point 40302–bit12 to 15 
+40303 – bit 0 to 3 
+ 
+Control: 
+Description Register 
+Activate « pressure alarm » status 40221 
+ 
+Visualization: 
+Description Register 
+Reference airflow for pressure alarm on fan 1 40061 
+Pressure for pressure alarm on fan 1 40062 
+Reference airflow for pressure alarm on fan 2 40063 
+Pressure for pressure alarm on fan 2 40064 
+  
+Status of pressure alarm on fan 1 and fan 2 40300 – bit 6 & 7 
+Status of external pressure alarm  40303 – bit 6 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+19 
+3.3.5 Fire alarm on TAC5 SC/F: 
+ 
+Setup: 
+Description Register 
+Select contact logic (IN2): normally «open» or «closed» 40510 
+Select action (off/on) in case of fire alarm for fan 1 40226 
+Select fan 1 airflow (or % max torque) in case of fire alarm 40511 
+Select action (off/on) in case of fire alarm for fan 2 40227 
+Select fan 2 airflow (or % max torque) in case of fire alarm 40512 
+ 
+Control: 
+Description Register 
+Set fire alarm status 40222 
+ 
+Visualization: 
+Description Register 
+Fire alarm status 40303 – bit 7&8 
+ 
+ 
+ 
+3.3.6 Boost on TAC5 SC/F: 
+ 
+Setup: 
+Description Register 
+enter BOOST fan 1 airflow (or % max torque) rate when activated 40548 
+enter BOOST fan 2 airflow (or % max torque) rate when activated 40549 
+ 
+Control: 
+Description Register 
+Force activation of « BOOST » airflow (or % max torque) 40228 
+ 
+ 
+3.3.7 Post-heating or cooling: external coil (SAT BA/KW OPTION) on TAC5 SC: 
+ 
+Setup: 
+Description Register 
+Choice of the comfort temperature regulation from the measured 
+value of the supply T° (comfort on T5, default) or of the ambient T° 
+(comfort on T2) 
+40570 
+Choose external coil type 40550 
+Enter comfort airflow set point temperature for heating  40425 
+Enter comfort airflow set point temperature for cooling 40447 
+ 
+Control: 
+Description Register 
+Disable post-heating 40225 
+Disable post- cooling 40229 
+Select heating or cooling method 40230 
+ 
+Visualization: 
+Description Register 
+Actual comfort air T° set point (cool or heat)  40059 
+If BA+ or BA+/- option: %age opening of 3-way valve 40174 
+If BA- option: %age opening of 3-way valve 40175 
+If KWext option: actual %age of maximum capacity of KW coil 40188 
+Extract air temperature (T°2)  40156 
+Actual Supply ait T°(T°5)  40159 
+Antifreeze status of external water coils 40088 
+ 
+ 
+ 
+ 
+ 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 20 
+3.3.8 Run time and maintenance alarms on TAC5 SC/F: 
+ 
+Setup: 
+Description Register 
+Activate run time logging 40534 
+Display run time on RC TAC5 40535 
+Activate maintenance alarm 40536 
+Hour count limit for maintenance alarm 40537 
+Activate maintenance alarm with a fan stop 40539 
+Hour count limit for maintenance alarm with fan stop 40540 
+ 
+Control: 
+Description Register 
+RESET hour count 40252 
+ 
+Visualization: 
+Description Register 
+Hour count of unit 40081 
+Status of maintenance alarm 40303 – bit 4 & 5 
+ 
+ 
+3.3.9 Operating with time tables on TAC5 SC/F: 
+ 
+TAC5 SC/F units can operate automatically according to a timetable. The timetable features 7 days/ 6 timeslots per day 
+programming. For each time slot, it is possible to configure the working mode and its different parameters. 
+ 
+Setup: 
+Description Register 
+See MODBUS §4.3.6 table below 41000..41417 
+ 
+Control: 
+Description Register 
+Enable automatic operation 40200 
+ 
+ 
+3.3.10 Seasonal programming on TAC5 SC: 
+ 
+The post-heating and the post-cooling can be en/disabled during certain periods of the year. 
+Configure a time period between 2 dates and enter feature status (i.e. closed position for the Bypass and OFF for the 
+heating or cooling), regardless of the configuration and actual temperature values. 
+ 
+Setup: 
+Description Register 
+Enter time periods for post-heating: see MODBUS table §4.2.7 below 41804..41807 
+Enter time periods for post-cooling: see MODBUS table §4.2.7 below 41808..41811 
+ 
+ 
+3.3.11 Advanced setup on TAC5 SC/F 
+ 
+Other parameters and advanced functionalities are accessible via MODBUS. They require a thorough knowledge of the 
+regulation.  You can find the details concerning these parameters in the detailed MODBUS table or in document  
+DT TAC5 F advanced setup available on our www.swegon.com site: 
+ 
+- Fans start torque 
+- Prevent stop of the fans 
+- In mode CPs:  - positive or negative logic 
+  - reaction speed of the CPs algorithm 
+- Post-ventilation configuration 
+- Configuration of AF (anti-frost) of coils (TAC5 SC)  
+- Reaction speed of modifications on post-heating/cooling (TAC5 SC) 
+- If comfort on T2 (on ambient T°, for TAC5 SC): 
+• comfort reaction speed 
+• upper and lower limit value of the temperature reached in the supply duct  
+- Access code configuration 
+- Factory reset 
+ 
+ 
+21 
+4 Detailed MODBUS table 
+ 
+Legend: 
+Read/Write 
+R = Read only 
+R/W = Read and Write 
+Register type 
+E1 = Register in EEPROM memory with endurance of 100 000 write cycles 
+R = Register in a non-volatile RAM memory  
+ 
+4.1 General info 
+ 
+Register Read / 
+Write 
+Type Description Accepted values 
+/Examples 
+40001 
+40002 
+R E1 Magic number to detect a product Swegon. 
+Two words. First word is 19533, second word is 20051. These are 
+the ASCII values of “LMNS”. 
+If read as a 32-bit value, the value is 1,314,081,869. 
+19533, 
+20051 
+40003 R E1 Swegon product identification code number of the TAC5 regulation 
+(CID) 
+Unsigned 0..32767 
+40004 R E1 Modbus mapping version.  
+= Major * 100 + minor 
+Example: 100 (major=1, minor=0) 
+Unsigned 0..32767 
+40005 R E1 Software version, major. 
+The software version number scheme is: major.minor.revision.  
+Leading zeros are not used. Valid versions would be v1.0.0, 
+v1.3.18 or v2.14.6. V1.03.18 would be invalid.  
+Each part can be 0..99, at least. 
+0..99 
+40006 R E1 Software version, minor. 0..99 
+40007 R E1 Software version, revision. 0..99 
+40008 R/W E1 Flag indicating that controller has been reset.  
+The Modbus master can use this to detect that the controller has 
+reset. Flag can be written to zero by the master.  
+0 or 1 
+40009 R E1 Software version, build number 
+This number will increase with each release. 
+Ex.: 1984 
+40010 R/W E1 Unit name (char 1-2), alphanumeric ascii only Ex.: 16961 (BA) 
+40011 R/W E1 Unit name (char 3-4), alphanumeric ascii only Ex.: 17475 (DC) 
+40012 R/W E1 Unit name (char 5-6), alphanumeric ascii only Ex.: 17989 (FE) 
+40013 R/W E1 Unit name (char 7-8), alphanumeric ascii only Ex.: 18503 (HG) 
+40014 R/W E1 Unit name (char 9-10), alphanumeric ascii only Ex.: 19017 (JI) 
+40015 R/W E1 Unit name (char 11-12), alphanumeric ascii only Ex.: 19531 (LK) 
+40016 R/W E1 Unit name (char 13-14), alphanumeric ascii only Ex.: 20045 (NM) 
+40017 R/W E1 Unit name (char 15-16), alphanumeric ascii only Ex.: 20559 (PO) 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 22 
+4.2 Specific Tables for TAC5 DG/DM/DT regulations 
+ 
+4.2.1 Visualization on TAC5 DG/DM/DT 
+ 
+Register Read / 
+Write 
+Type Description Accepted 
+values  
+40020 
+40021 
+R E1 Factory configuration: REC TYPE 
+32-bit value in 2 words 
+32-bit value in 2 
+words 
+40022 R E1 Factory configuration: PREHEAT OPTION 
+0=OFF, 1=ON-KWin 
+0 or 1 
+40023 R E1 Factory configuration: POSTHEAT OPTION 
+0=OFF, 1=ON-KWout, 2=ON-NV 
+0, 1 or 2 
+40024 R E1 Factory configuration: CT IN (damper) OPTION 
+0=NO, 1=YES 
+0 or 1 
+40025 R E1 Production setup: BYPASS% (system has a proportional bypass) 
+0=NO, 1=YES 
+0 or 1 
+40026 R E1 Has Backward fans?  
+0=NO, 1=YES 
+0 or 1 
+40027 R E1 Has Heat wheel?  
+0=NO, 1=YES 
+0 or 1 
+40028 R E1 Mode TQ?  
+0=NO 1=YES 
+0 or 1 
+40029 R E1 Caisson MK3? 
+0=NO 1=YES 
+0 or 1 
+40030 R E1 Heat wheel RPM at 10 V? 5..40 
+40031 R E1 Backward fans have sensor? 
+ (0=NO 1=YES) 
+0 or 1 
+     
+40050 
+40051 
+R E1 FAN TYPE  
+32-bit value in 2 words. Ex.: 720054 
+32-bit value in 2 
+words 
+40052 R E1 Current Working Mode  
+0=OFF, 1=CA, 2=LS, 4=CPs, (5=CAs), 6=TQ 
+9=INIT (temporary mode during init of pressure alarm or init of CPs 
+mode) 
+0, 1, 2, 4 or 6 
+40053 R E1 Current speed as stop/low/medium/high 
+0=STOP, 1=LOW/I, 2=MEDIUM/II, 3=HIGH/III 
+Or 0=stopped and 1=running. 
+0, 1, 2 or 3 
+40054 R E1 Current set point (SET VAL): 
+Range 0..9999  
+Can be m3/h, Pa, 0.1V or % unit. See 40055. 
+0..9999 
+ 
+40055 R E1 Current Set point (SET VAL) unit: 
+0=m3/h; 1=Pa; 2=0,1V; 3=percentage of maximum torque (%) 
+Applies to 40054 only. 
+0, 1, 2 or 3 
+40056 R E1 Current set point for supply fans F1/F2. 
+Can be m3/h, Pa, 0.1V or % unit. 
+0..max of unit 
+ 
+40057 R E1 Current set point for extraction fans F3/F4  
+Can be m3/h, Pa, 0.1V or % unit. 
+0..max of unit 
+ 
+40058 R E1 Preheat set point, in 0,1 °C units. 
+Range -99..+99 meaning -9,9 .. +9,9°C. 
+400 (+40.0°C) is a special case allowed for production tests. 
+-99..99 
+40059 R E1 Current comfort T° setpoint, in 0,1 °C units. 
+Range 1..+999 meaning +0,1 .. +99,9°C 
+May be heating or cooling. 
+0 means supply heating and cooling are OFF. 
+0..999 
+40060 R E1 Current Exhaust/Supply ratio (unbalance between exhaust and 
+supply flows) in %: 
+Range 5 .. 999 % 
+5..999 
+40061 R E1 Pressure alarm data: 
+Supply: reference flow for pressure alarm, in m3/h  
+0..max of unit 
+ 
+40062 R E1 Pressure alarm data: 
+Supply: reference pressure for pressure alarm, in Pa 
+0..max of unit 
+40063 R E1 Pressure alarm data: 
+Exhaust: reference flow for pressure alarm, in m3/h 
+0..max of unit 
+ 
+40064 R E1 Pressure alarm data: 
+Exhaust: reference pressure for pressure alarm, in Pa 
+0..max of unit 
+40065 R E1 Fan 1 (Supply 1) flow or torque (%TQ)  0..max of unit 
+ 
+23 
+40066 R E1 Fan 1 pressure  0..max of unit 
+40067 R E1 Fan 1 sent torque.  Range: 0..255 (127=50%) 0..255 
+40068 R E1 Fan 1 RPM  0..6000 
+40069 R E1 Fan 2 (Supply 2) flow or torque (%TQ) 0..max of unit 
+40070 R E1 Fan 2 pressure  0..max of unit 
+40071 R E1 Fan 2 sent torque.  Range: 0..255 (127=50%) 0..255 
+40072 R E1 Fan 2 RPM  0..6000 
+40073 R E1 Fan 3 (Exhaust 1) flow or torque (%TQ) 0..max of unit 
+40074 R E1 Fan 3 pressure  0..max of unit 
+40075 R E1 Fan 3 sent torque.  Range: 0..255 (127=50%) 0..255 
+40076 R E1 Fan 3 RPM  0..6000 
+40077 R E1 Fan 4 (Exhaust 2) flow or torque (%TQ) 0..max of unit 
+40078 R E1 Fan 4 pressure  0..max of unit 
+40079 R E1 Fan 4 sent torque.  Range: 0..255 (127=50%) 0..255 
+40080 R E1 Fan 4 RPM  0..6000 
+40081 
+40082 
+R E1 working hours of the unit:  
+RUN TIME: xxxxxx h 
+32-bit value in 2 words. 
+0..999999 
+40083 R E1 Antifreeze status of the integrated exchangers: 
+0=OFF 
+1= antifreeze of the air-air heat exchanger is activated  
+2= antifreeze of the warm water heat exchanger is activated  
+0, 1 or 2 
+40084 R E1 Bypass status 
+0=CLOSED, 1=OPEN, 2=PARTIALLY OPEN 
+0, 1 or 2 
+40085 R E1 CTin option: Damper status 
+0=CLOSED or CLOSING, 1=OPENING, 2=OPEN 
+0, 1 or 2 
+40086 R E1 post ventilation status 
+0=NO, 1=active 
+0 or 1 
+40087 R E1 Current control mode: indicates what controls the airflows 
+1 = FATAL ERROR: Fans are stopped 
+2 = FIRE ALARM (registers 40511 and 40512) 
+3 = RC: remote control RC TAC5  
+4 = EXTERNAL CONTACTS: K1-K2-K3 contacts  
+5 = TIMESCHEDULER configured by the RC TAC5  
+6 = TIMESCHEDULER configured by MODBUS or by the GRC 
+7 = MODBUS register 40201 
+8 = BYPASS (registers 40516 and 40517) 
+9 = BOOST (registers 40548 and 40549) 
+10 = MODBUS registers 40204 and 40205 
+11 = KNX 
+1..11 
+40088 R E1 Antifreeze status of the external exchangers: 
+0=OFF 
+1= antifreeze of the water exchanger BA+ or BA+/- is activated 
+2= antifreeze of the cold-water exchanger BA-  is activated 
+3= antifreeze of the warm and cold-water exchangers BA+ and BA-  
+are activated 
+0, 1, 2 or 3  
+40089 R E1 Current comfort T° heating set point, in 0,1 °C units. 
+Range 1..+999 meaning +0,1 .. +99,9°C 
+0 is heating OFF. 
+0..999 
+40090 R E1 Current comfort T° cooling set point, in 0,1 °C units. 
+Range 1..+999 meaning +0,1 .. +99,9°C 
+0 is cooling OFF. 
+0..999 
+40091 R E1 Bypass valve position. 0 .. 100%.  
+0% if closed, 100% if fully open. 
+For a proportional bypass valve: this value can be any value in the 
+range 0 .. 100%.  For an on/off bypass valve: this value can be any 
+0% or 100% only. 
+0..100 
+40092 R E1 Heat wheel RPM 0..20 
+     
+40095 R E1 MK3 state  
+0=CLOSED, 1=OPEN, 2=OPENING, 3=CLOSING 
+0, 1, 2 or 3 
+40096 R E1 Minor maintenance hours count of unit: xxxxxx h 
+32-bit value in 2 words. 
+0..999999 
+     
+40098 R E1 Changeover status (0=inactive, 1=heating, 2=cooling) 0, 1 or 2 
+40099 R E1 Defrost state (0=IDLE, 1=ACTIVE, 2=STOP to drain water) 0, 1 or 2 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 24 
+     
+40104 R E1 Delta Supply Pa Alarm (%) 0…999 
+40105 R E1 Delta Exhaust Pa Alarm (%) 0…999 
+     
+40109 R E1 Major maintenance hours count of unit: xxxxxx h 
+32-bit value in 2 words. 
+0..999999 
+     
+40150 R E1 Status of digital inputs block 0.  
+Bitmap with 1 bit per input. 0=OFF, 1=ON. 
+Bit 0: K1 
+Bit 1: K2 (as on/off)  
+Bit 2: K3 (as on/off) 
+Bit 3: IN1 (Master selection) 
+Bit 4: IN2 (DG/DT: dPa_alarm. DM: fire_alarm or dPa_alarm or 
+bypass) 
+Bit 5: IN3 (DG/DT: fire_alarm. DM: auto_mode) 
+Bit 6: IN4 (DG/DT: bypass_on. DM: boost) 
+Bit 7: IN5 (DG/DT: auto_mode) 
+Bit 8: IN6 (DG/DT: no_postheat) 
+Bit 9: IN7 (DG/DT: fire_alarm: run supply fans) 
+Bit 10: IN8 (DG/DT: fire_alarm: run exhaust fans) 
+Bit 11: IN9 (DG/DT: boost) 
+Bit 12: IN10 (SATBA Post cooling OFF) 
+Bit 13: IN11 (SATBA select heating or cooling, open = heating, 
+closed = cooling) 
+Bit 14: IN12 (DG/DT: wheel or modulating bypass input) 
+0..16383 
+40152 R E1 K1 Analogue voltage,  
+K1 is a digital input but it is shown here for completeness. 
+0..100 = 0..10,0V 
+0..100 
+40153 R E1 K2 Analogue voltage,  
+0..100 = 0..10,0V 
+0..100 
+40154 R E1 K3 Analogue voltage,  
+0..100 = 0..10,0V 
+0..100 
+40155 R E1 Temperature T°1, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+40156 R E1 Temperature T°2, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+40157 R E1 Temperature T°3, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+40158 R E1 Temperature T°4, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+40159 R E1 Temperature T°5, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+     
+ 
+40161 R E1 Temperature T°7, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+40162 R E1 Temperature T°8, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+40163 R E1 Backward fans inlet diff pressure, Analogue input PR1,  
+0..100 = 0..10,0V 
+0..100 
+40164 R E1 Backward fans inlet diff pressure, Analogue input PR2, 
+0..100 = 0..10,0V 
+0..100 
+ 
+25 
+40165 R E1 Backward fans inlet diff pressure, Analogue input PR1,  
+0..16383 = 0..10,0V 
+0..16383 
+40166 R E1 Backward fans inlet diff pressure, Analogue input PR2, 
+0..16383 = 0..10,0V 
+0..16383 
+     
+40168 R E1 Status of digital outputs block 0.  
+Bitmap with 1 bit per input. 0=OFF, 1=ON. 
+Bit 0: AL1 alarm, 1=”alarm” 
+Bit 1: BYPASS 1 (For on/off bypass: 0=closed/off 1=open/on. For 
+prop_bypass: 0=down 1=up). 
+Bit 2: BYPASS 2 (For on/off bypass: always on. For prop_bypass: 
+0=stop 1=run) 
+Bit 3: CT 
+Bit 4: KWin 
+Bit 5: KWout 
+Bit 6: OR1 SAT “pressure alarm” 
+Bit 7: OR2 SAT “fan on” 
+Bit 8: OR3 SAT “water pump NV” 
+Bit 9: OR4 SAT “bypass on” 
+Bit 10: SATBA WP 
+Bit 11: SATBA OUT9 KWext 
+0..4095 
+40169 R E1 Status of digital outputs block 1.  
+Bitmap with 1 bit per input. 0=OFF, 1=ON. 
+Bit 0: OUT1 
+Bit 1: OUT2  
+Bit 2: OUT3 
+Bit 3: OUT4 
+Bit 4: OUT5 
+0..31 
+40170 R E1 Analogue output OUT1.  
+Image of the flow or pressure of one fan (to be configured in 
+advanced setup). 
+In 0,1V units, range 0..100 meaning 0,0V .. 10.0V. 
+0 – 10V = 0 – Max airflow or pressure of the fan 
+0..100 
+40171 R E1 Analogue output OUT2.  
+Image of the flow or pressure of one fan (to be configured in 
+advanced setup). 
+In 0,1V units, range 0..100 meaning 0,0V .. 10.0V. 
+0 – 10V = 0 – Max airflow or pressure of the fan 
+0..100 
+40172 R E1 Analogue output OUT4 - NV.  
+Post heat NV option: opening of the 3-ways valve 
+In 0,1V units, range 0..100 meaning 0,0V .. 10.0V. 
+0..100 
+40174 R E1 Analogue output OUT7.  
+Post heat/cool BA+ or BA+/- option: opening of the 3-ways valve 
+In 0,1V units, range 0..100 meaning 0,0V .. 10.0V. 
+0..100 
+40175 R E1 Analogue output OUT8.  
+Post cool BA- option: opening of the 3-ways valve 
+In 0,1V units, range 0..100 meaning 0,0V .. 10.0V. 
+0..100 
+     
+ 
+40186 R E1 output KWin  
+Preheat KWin option: power of the electric coil (%) 
+In % units, range 0..100 meaning 0..100%. 
+0..100 
+40187 R E1 output KWout  
+Post heat KWout option: power of the electric coil (%) 
+In % units, range 0..100 meaning 0..100%. 
+0..100 
+40188 R E1 output external KW (SAT BA/KW) 
+Post heat SAT KW option: power of the electric coil (%) 
+In % units, range 0..100 meaning 0..100%. 
+0..100 
+40189 R E1 Heat wheel: Measured RPM 
+In 0.1 RPM unit. 0-300 is 0.0-30.0 RPM. 
+0..300 
+40190 R E1 Pressure measured with Modbus sensor for Supply fan in CP mode. 
+Pa unit. 
+0..9999 
+40191 R E1 Pressure measured with Modbus sensor for Exhaust fan in CP 
+mode. Pa unit. 
+0..9999 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 26 
+4.2.2 Control on TAC5 DG/DM/DT 
+ 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+40200 R/W R Selection of the control master (who will determine speed). 
+0= RC TAC5 determines speed 
+1=MODBUS determines speed via register 40201 
+2=TIMETABLE determines airflows (automatic working) 
+3= MODBUS determines airflows via registers 40204/40205 
+0, 1, 2 or 3 
+40201 R/W R Speed selection via Modbus (only if 40200=1) 
+0=STOP 
+1=LOW-pos.I 
+2=MEDIUM-pos.II 
+3=HIGH-pos.III 
+0, 1, 2 or 3 
+40204 R/W R Supply airflow/torque (%TQ) selection via Modbus (only if 40200=3) 
+Range 0..9999 
+min..max of unit 
++ 0 
+40205 R/W R Exhaust airflow/torque (%TQ) selection via Modbus (only if 40200=3) 
+Range 0..9999 
+min..max of unit 
++ 0 
+     
+40221 R/W R External pressure alarm 
+0=No alarm 
+1=Pressure alarm activated 
+0 or 1 
+40222 R/W R Fire alarm 
+0=No alarm 
+1=Fire alarm activated 
+0 or 1 
+40223 R/W R Override: force bypass open or closed. 
+Range 0/1/2. 
+Set to 0 for auto.bypass control (based on measured T°1 and T°2). 
+Set to 1 to force bypass open (on). 
+Set to 2 to force bypass close (off). 
+Setting this register to 1 is equivalent to activating the “Force bypass 
+open” input IN4. 
+ 
+0..2 
+40224 R/W R Override: force automatic mode. 
+Set to 1 to force automatic mode. 
+This is equivalent to activating the “automatic mode” input, if any. 
+0 or 1 
+40225 R/W R ON/OFF Post heat: to deactivate the post heating 
+0=Post heating allowed 
+1=Post heating not allowed 
+0 or 1 
+40226 R/W R Fire alarm supply airflow/torque (%TQ) 
+0=Supply fan is stopped in fire alarm 
+1=Supply fan is running in fire alarm 
+0 or 1 
+40227 R/W R Fire alarm exhaust airflow/ torque (%TQ) 
+0=Exhaust fan is stopped in fire alarm 
+1=Exhaust fan is running in fire alarm 
+0 or 1 
+40228 R/W R Boost control 
+0= Boost function not activated 
+1= Boost function activated 
+0 or 1 
+40229 R/W R ON/OFF Post cool: to deactivate the cooling 
+0= cooling allowed 
+1= cooling not allowed 
+0 or 1 
+40230 R/W R Cooling or heating selection: 
+0= heating position 
+1= cooling position 
+0 or 1 
+40231 R/W R 
+ 
+ 
+Override: force MK3 active. 
+Range 0/1. 
+Set to 1 to force “MK3” mode. 
+This is equivalent to activating the “MK3 active” input IN6 on DT. 
+0 or 1 
+     
+40250 R/W E1 RESET 
+Perform a reset to clear pending alarms and resume normal working. 
+Required to recover from fatal alarms. 
+This operation takes about 1 second. The Modbus write command will 
+be answered immediately, then the operation will be executed. 
+Modbus commands will not be answered during the operation. 
+Read: always 0. 
+Write: 1 to perform reset. 
+0 or 1 
+ 
+27 
+ 
+40251 R/W E1 RESET TO FACTORY DEFAULT VALUES. 
+Reset setup and advanced setup parameters to their factory default 
+values. 
+This operation takes about 3 seconds. The Modbus write command 
+will be answered immediately, then the operation will be executed. 
+Modbus commands will not be answered during the operation. 
+Read: always 0. 
+Write: 1 to perform reset. 
+0 or 1 
+40252 R/W E1 RESET RUN TIME 
+Reset run time (working hours) to zero. 
+Read: always 0 
+Write: 1 to perform reset. 
+0 or 1 
+40253 R/W E1 Pressure alarm initialization  
+Start the initialization 
+Will be accepted in CA and LS mode only! 
+Initialization is: run with reference flow set in 40254, measure 
+pressure, store reference pressure.  
+Working mode is set to 9 during the initialization. 
+Read: 0=idle, 1=start. 
+Write: 1 to start 
+0 or 1 
+40254 R/W E1 Pressure initialization  
+Initialization flow/torque 1: Reference flow/torque used for: 
+- CA/LS mode: Pa alarm initialization (supply fan flow) 
+- CPs mode: initialization (supply fan flow/torque if “CPs on SUP” or 
+“CPs on SUP+EXH”, exhaust fan flow/torque if “CPs on EXH”)  
+Range is limited to the minimum and maximum flow/torque of the fans 
+used 
+min. max of unit 
+     
+40256 R/W E1 CPs mode initialization. 
+Start the initialization 
+Will be accepted in CPs mode only! 
+- “CPs on SUP”: run supply with reference flow/torque set in 40254, 
+run exhaust with ratio, measure K2 voltage, store reference voltage.  
+- “CPs on EXH”: run exhaust with reference flow/torque set in 40254, 
+run supply with 1/ratio, measure K2 voltage, store reference voltage.  
+- “CPs on SUP+EXH”: run supply with reference flow/torque set in 
+40254, run exhaust with reference flow/torque set in 40257, measure 
+K2 voltage for supply, measure K3 voltage for exhaust, store 
+reference voltage.  
+ 
+Working mode is set to 9 during the initialization. 
+Read: 0=idle, 1=start. 
+Write: 1 to start 
+0 or 1 
+40257 R/W E1 Initialization flow 2: Reference flow used for: 
+- CPs mode initialization (exhaust fan flow if “CPs on SUP+EXH”)  
+Range is limited to the minimum and maximum flow/torque of the fans 
+used 
+min..max of unit 
+40258 R/W E1 Override: force proportional bypass valve position. 
+-1 is no override. 
+0 .. 100% is override to this position. 0% is closed. 100% is open. 
+This override has lower priority than Antifreeze. 
+Default value is -1. 
+-1..100 
+40259 R/W E1 Override: force heat wheel RPM. 
+-1 is no override. 
+0 .. 99 is overridden use this RPM. 0 is heat wheel stop. Value is 
+clipped to the maximum heat wheel RPM.  
+This override has higher priority than Antifreeze! 
+Default value is -1. 
+-1..100 
+40260 R/W E1 RESET MINOR MAINTENANCE HOURS 
+Reset minor maintenance hours to zero. 
+Read: always 0 
+Write: 1 to perform reset. 
+0 or 1 
+40261 R/W E1 RESET MAJOR MAINTENANCE HOURS 
+Reset major maintenance hours to zero. 
+Read: always 0 
+Write: 1 to perform reset. 
+0 or 1 
+ 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 28 
+4.2.3 Alarms on TAC5 DG/DM/DT 
+ 
+See our Alarm document for more details 
+Register Read / 
+Write 
+Type Alarm bits  
+Alarm flags are bits in holding registers. 1 bit per alarm, 16 
+alarms per register. 
+Bit is 1 if alarm is active. Read only. 
+Accepted 
+values 
+40300 R E1 Bit 0:  ALARM_PROGRAM_ERROR 
+Bit 1:  ALARM_DATA_ERROR 
+Bit 2:  ALARM_FAN1 
+Bit 3:  ALARM_FAN2 
+Bit 4:  ALARM_FAN3 
+Bit 5:  ALARM_FAN4 
+Bit 6:  ALARM_PRESSURE_F1 
+Bit 7:  ALARM_PRESSURE_F3 
+Bit 8:  ALARM_T1_OPEN 
+Bit 9:  ALARM_T1_SHORT 
+Bit 10: ALARM_T2_OPEN 
+Bit 11: ALARM_T2_SHORT 
+Bit 12: ALARM_T3_OPEN 
+Bit 13: ALARM_T3_SHORT 
+Bit 14: ALARM_T4_OPEN 
+Bit 15: ALARM_T4_SHORT 
+0..65535 
+ 
+40301 R E1 Bit 0:  ALARM_T5_OPEN 
+Bit 1:  ALARM_T5_SHORT 
+Bit 4:  ALARM_T7_OPEN 
+Bit 5:  ALARM_T7_SHORT 
+Bit 6:  ALARM_T8_OPEN 
+Bit 7:  ALARM_T8_SHORT 
+Bit 8:  ALARM_CP_FAN_1_HIGH 
+Bit 9:  ALARM_CP_FAN_1_LOW 
+Bit 10: ALARM_CP_FAN_3_HIGH 
+Bit 11: ALARM_CP_FAN_3_LOW 
+Bit 12: ALARM_LS_FAN_1_LOW 
+Bit 13: ALARM_LS_FAN_1_HIGH 
+Bit 14: ALARM_LS_FAN_2_LOW 
+Bit 15: ALARM_LS_FAN_2_HIGH 
+0..65535 
+ 
+40302 R E1 Bit 0:  ALARM_LS_FAN_3_LOW 
+Bit 1:  ALARM_LS_FAN_3_HIGH 
+Bit 2:  ALARM_LS_FAN_4_LOW 
+Bit 3:  ALARM_LS_FAN_4_HIGH 
+Bit 4:  ALARM_CA_FAN_1_LOW 
+Bit 5:  ALARM_CA_FAN_1_HIGH 
+Bit 6:  ALARM_CA_FAN_2_LOW 
+Bit 7:  ALARM_CA_FAN_2_HIGH 
+Bit 8:  ALARM_CA_FAN_3_LOW 
+Bit 9:  ALARM_CA_FAN_3_HIGH 
+Bit 10: ALARM_CA_FAN_4_LOW 
+Bit 11: ALARM_CA_FAN_4_HIGH 
+Bit 12: ALARM_PA_INIT_F1_NOT_STAB 
+Bit 13: ALARM_PA_INIT_F3_NOT_STAB 
+Bit 14: ALARM_PA_INIT_F1_TOO_LOW 
+Bit 15: ALARM_PA_INIT_F3_TOO_LOW 
+0..65535 
+ 
+ 
+29 
+40303 R E1 Bit 0:  ALARM_PA_INIT_F1_NOT_ACHIEVED 
+Bit 1:  ALARM_PA_INIT_F3_NOT_ACHIEVED 
+Bit 2:  ALARM_PA_INIT_F1_TOO_HIGH 
+Bit 3:  ALARM_PA_INIT_F3_TOO_HIGH 
+Bit 4:  ALARM_MAINT_WARN 
+Bit 5:  ALARM_MAINT_FATAL 
+Bit 6:  ALARM_DPA 
+Bit 7:  ALARM_FIRE 
+Bit 8:  ALARM_END_OF_FIRE_ALARM 
+Bit 9:  ALARM_VLOWERVLOW 
+Bit 10: ALARM_VHIGERVHIGH 
+Bit 11: ALARM_PREHEAT_REDUCED 
+Bit 12: ALARM_PREHEAT_STOP 
+Bit 13: ALARM_AF_REDUCED 
+Bit 14: ALARM_AF_STOP 
+Bit 15: ALARM_POSTHEAT_SETPOINT (comfort T° too low) 
+0..65535 
+ 
+40304 R E1 Bit 0:  ALARM_POSTCOOLING_SETPOINT (comfort T° too high) 
+Bit 1: ALARM_SAT-BA_MODULE (SAT-BA module is configured but 
+does not respond) 
+Bit 2: ALARM CONDENS DRAINPAN IS FULL, CHACK PUMP 
+Bit 3: ALARM T5_AF_STOP, AF_REC_ON, STOP FANS 
+Bit 4: ALARM HEATWHEEL RPM TOO LOW OR TOO HIGH 
+Bit 5: ALARM PROP BYPASS POSITION 
+Bit 6: ALARM AF NV STOP 
+Bit 7: ALARM AF BA+ STOP 
+Bit 8: ALARM AF BA- STOP 
+Bit 9: ALARM AF BA+/- STOP 
+bit10=ALARM MINOR MAINTENANCE 
+bit11=DEFROST ALARM 
+bit12=ALARM MODBUS COMMUNICATION ERROR 
+bit13=ALARM MAJOR MAINTENANCE 
+0..65535 
+ 
+ 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 30 
+4.2.4 SETUP parameters on TAC5 DG/DM/DT 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+40400 R/W E1 Current time: seconds 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+0..59 
+40401 R/W E1 Current time: minutes: 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+0..59 
+40402 R/W E1 Current time: hours: 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+0..23 
+40403 R/W E1 Current date: day of month: 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+1..31 
+40404 R/W E1 Current time: month: 
+1=January 
+12=December 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+1..12 
+40405 R/W E1 Current time: year: 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+2000..2099 
+ 
+40406 R E1 Current time: Day of the week: 
+0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday, 
+5=Saturday, 6=Sunday. 
+This register is read only! The weekday is automatically 
+calculated when the date changes. 
+0..6 
+   Notes on the real time clock: 
+• The range of the clock is 1 jan 2000 .. 31 dec 2099. 
+• The date is validated when written. 
+• Automatic leap year correction. 
+• Automatic Daylight Saving Time (DST) adjustment following EU 
+rules. Adjust +01:00 at 2:00 on the last Sunday in March. Adjust -
+1:00 at 3:00 at the last Sunday in October. 
+ 
+40420 R/W E1 LANGUAGE 
+language on the Remote control RC TAC5 
+0=GB(English), 1=F(French), 2=D(German), 3=NL(Dutch) 
+0, 1, 2 or 3 
+40421 
+40422 
+R/W E1 FAN TYPE 
+32-bit value in 2 words. 
+Cannot be changed if a RECTYPE is set. 
+32-bit value in 2 
+words 
+40423 R/W E1 NUMBER OF FANS, (# FANS) 
+Some configurations allow 2 or 4 fans only. 
+Cannot be changed if a RECTYPE is set. 
+1..4 
+40424 R/W E1 FAN POSITIONS  
+If #FANS=1: don’t care 
+If #FANS=2: position=0: Fan1+Fan3 
+                  position=1: Fan1+Fan2 
+if #FANS=3: position=0: Fan1+Fan3+Fan4 
+                  position=1: Fan1+Fan2+Fan3 
+if #FANS=4: don’t care 
+Cannot be changed if a RECTYPE is set. 
+0 or 1 
+40425 R/W E1 Post heat set point 
+For NV, KWout, BA+ and KWext options 
+In 0,1 °C units. 
+Range 0..+999 meaning 0 .. +99,9°C 
+0 is OFF 
+0..999 
+40426 R/W E1 FANS WORKING MODE 
+0=OFF: unit is stopped 
+1=CA: constant airflows 
+2=LS: airflow linked to 0-10V input signal 
+4=CPs: constant pressure with sensor 
+6=TQ: constant torque 
+9=INIT (9 is a temporary mode during initialization of pressure for 
+pressure alarm or CPs mode) 
+0, 1, 2, 4, 6 or 9 
+40427 R/W E1 Exhaust/Supply flows ratio 
+To create an unbalance between flows 
+5..999 
+ 
+31 
+40428 R/W E1 Airflow selection in CA mode, % of maximum torque in TQ mode: 
+Speed 1 (K1 – Pos.I) Range 0..9999 
+0..max of unit 
+40429 R/W E1 Airflow selection in CA mode, % of maximum torque in TQ mode: 
+Speed 2 (K2 – Pos.II) Range 0..9999 
+0..max of unit 
+40430 R/W E1 Airflow selection in CA mode, % of maximum torque in TQ mode: 
+Speed 3 (K3 – Pos.III) Range 0..9999 
+0..max of unit 
+40431 R/W E1 Pressure alarm selection 
+For CA and LS mode only: 
+Pressure alarm selection 
+0=No pressure alarm 
+1=Pressure alarm selected 
+0 or 1 
+40432 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Pressure offset on supply (increase of pressure) 
+In Pa units 
+25..999 
+40433 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Pressure offset on exhaust (increase of pressure) 
+In Pa units 
+25..999 
+40434 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Reference flow on supply for pressure alarm 
+In m3/h units 
+min..max of unit 
+40435 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Pressure at reference flow on supply. 
+In Pa units 
+0..max of unit 
+40436 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Reference flow on exhaust for pressure alarm 
+In m3/h units 
+min..max of unit 
+40437 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Pressure at reference flow on exhaust. 
+In Pa units 
+0..max of unit 
+40438 R/W E1 Signal link data 
+For LS mode only: 
+Minimum signal value: Vmin 
+In 0,1V units, 0..100 meaning 0..10,0V 
+0..100 
+40439 R/W E1 Signal link data 
+For LS mode only: 
+Maximum signal value: Vmax 
+In 0,1V units, 0..100 meaning 0..10,0V 
+0..100 
+40440 R/W E1 Signal link data 
+For LS mode only: 
+Airflow/torque at Vmin 
+In m3/h units or % max torque 
+min..max of unit 
+40441 R/W E1 Signal link data 
+For LS mode only: 
+Airflow/torque at Vmax 
+In m3/h units or % max torque 
+min..max of unit 
+40442 R/W E1 Sleep mode reduction on K3  
+For LS and CPs mode only: 
+reduction in % of the nominal set point 
+In % unit 
+1..100 
+40443 R/W E1 For all modes: 
+Control set point on F1 (Supply fans)? F3 (Exhaust fans)? Or both? 
+0=on F1(supply)  
+1=on F3(exhaust) (if supported) 
+2=F1+F3 (supply and exhaust) 
+0,1 or 2 
+40444 R/W E1 For CPs mode only: 
+Initialization flow 1: Reference flow used for: 
+- CPs mode initialization (supply fan flow if “CPs on SUP” or “CPs on 
+SUP+EXH”, exhaust fan flow if “CPs on EXH”). 
+min..max of unit 
+     
+40446 R/W E1 For CPs mode only: 
+Set point 1 voltage for supply fans in “CPs on SUP” or “CPs on 
+0..100 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 32 
+SUP+EXH”, or for exhaust fans in “CPs on EXH” 
+In 0,1V units, range 0..100 is 0..10.0V. 
+40447 R/W E1 Cooling set point 
+For BA- and BA+/- options 
+In 0,1 °C units. 
+Range 0..+999 meaning 0 .. +99,9°C. 0 is OFF 
+0..999 
+40448 R/W E1 Constant pressure data 
+For CPs mode only: 
+Reference flow 2 used for measuring pressure.  
+exhaust fan flow/torque if “CPs on SUP+EXH” 
+In m3/h units or % max torque 
+min..max of unit 
+40449 R/W E1 Constant pressure data 
+For CPs on SUP+EXH only: 
+Reference voltage for exhaust flow to keep constant 
+In 0,1V units, range 0..100 is 0..10.0V. 
+0..100 
+     
+40454 R/W E1 Freecooling set point temperature (for freecooling via proportional 
+bypass valve). 
+In 0,1 °C units. 
+0..999 
+     
+40457 R/W E1 Hours count for minor maintenance alarm based on elapsed time. In 
+hours units. 0 is counting disabled 
+0..9999 
+40458 R/W E1 Hours count for major maintenance alarm based on elapsed time. In 
+hours units. 0 is counting disabled 
+0..9999 
+ 
+  
+ 
+33 
+4.2.5 ADVANCED SETUP parameters on TAC5 DG/DM/DT 
+ 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+40500 R/W E1 Stop the fans in pressure alarm 
+For CA and LS mode only: 
+0=NO, 1=YES 
+0 or 1 
+40501 R/W E1 Stop the fans if signal on K2 is lower than Vlow 
+For LS mode only 
+0=NO, 1=YES 
+0 or 1 
+40502 R/W E1 If 40501 is 1, value of Vlow 
+For LS mode only  
+In 0,1V units, range 0..100 meaning 0..10,0V 
+0..100 
+40503 R/W E1 Stop the fans if signal on K2 is higher than Vhigh 
+For LS mode only 
+0=NO, 1=YES 
+0 or 1 
+40504 R/W E1 If 40503 is 1, value of Vhigh 
+For LS mode only  
+In 0,1V units, range 0..100 meaning 0..10,0V 
+0..100 
+40505 R/W E1 Signal to control exhaust airflow on K3 
+For LS mode only 
+0=NO, 1=YES 
+0 or 1 
+40506 R/W E1 Reaction speed in CPs mode 
+For CPs mode only 
+Range 10..0 (10=fastest (default value) – 0=slowest) 
+0..10 
+40507 R/W E1 Reaction logic in CPs mode 
+For CPs mode only 
+0=POSITIVE: airflow increase if Vk2 > set point 
+1=NEGATIVE: airflow increase if Vk2 < set point 
+0 or 1 
+40508 R/W E1 Start torque 
+In % unit 
+2..98 
+40509 R/W E1 “FANS OFF” allowed? 
+If 0, the ventilation cannot be stopped (above in alarm) 
+0=NO, 1=YES 
+0 or 1 
+40510 R/W E1 Fire alarm: normally open or closed contact selection 
+0 = normally open (N.O.) 
+1 = normally closed (N.C.) 
+0 or 1 
+40511 R/W E1 Fire alarm: airflow selection  
+Airflow/torque for supply 
+In m3/h units or % max torque 
+min..max of unit 
++ 0 
+40512 R/W E1 Fire alarm: airflow selection  
+Airflow/torque for exhaust 
+In m3/h units or % max torque 
+min..max of unit 
++ 0 
+40513 R/W E1 Bypass data 
+T°1 value 
+(40514 is raised if required to meet the T2 >= (T1+1°C) requirement) 
+In 0,1°C units, Range 50 .. 270 meaning 5.0 .. 27.0 °C 
+50..270 
+40514 R/W E1 Bypass data 
+T°2 value 
+(T2 must be >= (T1+1°C)) 
+In 0,1°C units, Range 60 .. 280 meaning 6.0 .. 28.0 °C 
+60..280 
+40515 R/W E1 Bypass data 
+To force airflows when bypass is open 
+0=NO, 1=YES 
+0 or 1 
+40516 R/W E1 Bypass data 
+If 40515 = 1, Supply airflow/torque when bypass is open  
+In m3/h units or % max torque 
+min..max of unit 
++ 0 
+40517 R/W E1 Bypass data 
+If 40515 = 1, Exhaust airflow/torque when bypass is open  
+In m3/h units or % max torque 
+min..max of unit 
++ 0 
+40518 R/W E1 AF REC set point. 
+Used for KWin/BAin preheat set point, proportional bypass and heat 
+wheel anti-frosting In 0,1°C units, Range -99..99 meaning -9.9 .. 9.9°C 
+-99..99 
+40519 R/W E1 Antifreeze air-air exchanger 
+Activation of the antifreeze protection 
+0=NO, 1=YES 
+0 or 1 
+40520 R/W E1 Antifreeze air-air exchanger -10..30 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 34 
+T° LOW 
+(Antifreeze T° HIGH is raised if required to meet the T°HIGH >= (T° 
+LOW +1°C) requirement) 
+In 0,1°C units, Range -10 .. +30 meaning -1 .. +3°C 
+40521 R/W E1 Antifreeze air-air exchanger 
+T° HIGH 
+(T°HIGH must be >= (T° LOW +1°C)) 
+In 0,1°C units, Range 10 .. 50 meaning 1.0 .. 5.0 °C 
+10..50 
+40522 R/W E1 Antifreeze air-air exchanger 
+Allow supply airflow to be stopped if T°3 < T°LOW  
+0=NO, 1=YES 
+0 or 1 
+40523 R/W E1 KWin option 
+Preheat KWin PID: PB (Gain = 100/PB) 
+In % units 
+1..100 
+40524 R/W E1 KWin option 
+Preheat KWin PID: Ti 
+In sec. units 
+0..9999 
+40525 R/W E1 KWin option 
+Preheat KWin PID: Td 
+In sec. units 
+0..9999 
+40526 R/W E1 NV and BA+ option 
+Post heat NV or BA+ speed  
+Range 10..1 (10=fastest, 1=slowest) 
+1..10 
+40527 R/W E1 KWout or KWext option 
+Post heat KWout PID: PB (Gain = 100/PB) 
+In % units 
+1..100 
+40528 R/W E1 KWout or KWext option 
+Post heat KWout PID: Ti 
+In sec. units 
+0..9999 
+40529 R/W E1 KWout or KWext option 
+Post heat KWout PID: Td 
+In sec. units 
+0..9999 
+40530 R/W E1 Analogue output OUT1 
+Selection of the parameter to be sent on OUT1 
+0=m3/h F1,  
+2=m3/h F2,  
+4=m3/h F3,  
+6=m3/h F4,  
+1=Pa F1, 
+3=Pa F2, 
+5=Pa F3, 
+7=Pa F4, 
+8=%TQ F1,  
+9=%TQ F2,  
+10=%TQ F3,  
+11=%TQ F4, 
+ 
+0..11 
+40531 R/W E1 Analogue output OUT2 
+Selection of the parameter to be sent on OUT2 
+0=m3/h F1,  
+2=m3/h F2,  
+4=m3/h F3,  
+6=m3/h F4,  
+1=Pa F1, 
+3=Pa F2, 
+5=Pa F3, 
+7=Pa F4, 
+8=%TQ F1,  
+9=%TQ F2,  
+10=%TQ F3,  
+11=%TQ F4, 
+ 
+0..11 
+40532 R/W E1 Post ventilation 
+Activation of the post-ventilation 
+0=NO, 1=YES 
+0 or 1 
+40533 R/W E1 Post ventilation  
+Selection of the post-ventilation time 
+In sec. units 
+0..9999 
+40534 R/W E1 Fan run time 
+Activation of the telling of the working hours of the unit 
+0=NO, 1=YES 
+0 or 1 
+40535 R/W E1 Fan run time 
+To display the working hours on the RC or GRC TAC5 0=NO, 1=YES 
+0 or 1 
+40536 R/W E1 Fan run time 
+To activate a "SERVICE alarm" after a predetermined time 
+0=NO, 1=YES 
+0 or 1 
+40537 
+40538 
+R/W E1 Fan run time 
+Time for the "SERVICE alarm" 
+In hours units 
+32-bit value in 2 words. 
+0 .. 999999 
+40539 R/W E1 Fan run time 
+To stop the fans after a predetermined time 
+0=NO, 1=YES 
+0 or 1 
+40540 
+40541 
+R/W E1 Fan run time 
+Time to stop the fans in "SERVICE alarm" 
+0 .. 999999 
+ 
+35 
+In hours units 
+32-bit value in 2 words. 
+40542 R/W E1 To display only the alarms on the RC TAC5 
+(Airflows, pressures and other parameters are hidden) 
+0=NO, 1=YES 
+0 or 1 
+40543 R/W E1 MODBUS configuration 
+Modbus Address of the TAC5 circuit 
+1..247 
+     
+40546 R/W E1 Access code for RC TAC5 
+To require a code to get access to setup menus 
+0=NO, 1=YES 
+0 or 1 
+40547 R/W E1 Access code for RC TAC5 
+Code selection 
+0..9999 
+40548 R/W E1 Boost data 
+Supply airflow/torque when “Boost “is activated.  
+In m3/h units or % max torque 
+min..max of unit 
++ 0 
+40549 R/W E1 Boost data 
+Exhaust airflow/torque when “Boost “is activated.  
+In m3/h units or % max torque 
+min..max of unit 
++ 0 
+40550 R/W E1 SAT BA/KW option (external heating or cooling) 
+Selection of the external heating or cooling exchanger: 
+0 = none 
+1 = BA + 
+2 = BA -  
+3 = BA+/BA- (2 exchangers) 
+4 = BA+/- (1 exchanger for heating and cooling) 
+5 = KW 
+6 = KW / BA - 
+7 = BAin 
+8 = BAin/BA+ 
+9 = BAin/BA+- 
+0..9 
+40551 R/W E1 BA- or BAin option 
+Cooling BA- or preheat BAin speed  
+Range 10..1 (10=fastest, 1=slowest) 
+1..10 
+40552 R/W E1 BA+ Antifreeze T° threshold: 
+In 0,1°C units. Range -100..+999 meaning -10 .. +99,9°C 
+-100..999 
+40553 R/W E1 BA- or BAin Antifreeze T° threshold: 
+In 0,1°C units. Range -100..+999 meaning -10 .. +99,9°C 
+-100..999 
+40554 R/W E1 NV Antifreeze T° threshold: 
+In 0,1°C units. Range -100..+999 meaning -10 .. +99,9°C 
+-100..999 
+40555 R/W E1 For TAC5 DM: IN2 mode (0=fire_alarm, 1=pressure alarm, 
+2=bypass_on) 
+0..2 
+40556 R/W E1 For TAC5 DM: OR1 mode (0=Pa_alarm, 1=fan_on, 2=CT_in) 0, 1, 2 
+40557 R/W E1 For TAC5 DM: OR2 mode (0=Pa_alarm, 1=fan_on, 2=CT_in) 0, 1, 2 
+     
+40560 R/W E1 Proportional bypass: Nr of pulses per step 0..32767 
+40561 R/W E1 Proportional bypass: Delay after step (1...255 seconds) 1..255 
+40562 R/W E1 Proportional bypass mode. 
+0 = ANTIFREEZE 
+1 = FREECOOLING 
+2 = ANTIFREEZE +FREECOOLING 
+0..2 
+40563 R/W E1 Heat wheel nominal RPM 0-20 
+40564 R/W E1 Heat wheel AF RPM 0-20 
+40565 R/W E1 Preheat KWin on T5 (0=KWin on T3, 1=KWin on T5) 0 or 1 
+40566 R/W E1 Post heat: stop fans if T5 < 5°C (0=NO 1=YES) 0 or 1 
+40567 R/W E1 Proportional bypass: limit supply flow if prop bypass is >= this % open 0..100 
+     
+40570 R/W E1 Comfort T2 regulation - on T5 (supply) or T2 (extract/ambient) 
+0=T5 (default), 1=T2  
+0 or 1 
+40571 R/W E1 Comfort T2 regulation - speed  
+0..10, 0=slow, 10=fast (8 is default) 
+0..10 
+40572 R/W E1 Comfort T2 regulation - T5 MIN temp 
+In 0,1°C units. Range 0 .. +200 meaning 0,0 .. +20,0°C. 
+0..200 
+40573 R/W E1 Comfort T2 regulation - T5 MAX temp  
+In 0,1°C units. Range 160 .. +500 meaning 16,0 .. +50,0°C. 
+T5 MAX must also be >= T5 MIN +2°C. If T5 MIN is changed, T5 MAX 
+160..500 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 36 
+will automatically be increased to be >= T5 MIN +2°C. 
+Range 160..+500 meaning 16 .. +50,0°C 
+     
+40577 R/W E1 Boost on (0=contact, 1=RH) 
+If set to 1 and in LS/CPs mode, K3 is not used as setpoint anymore 
+(MB40505 forced to 0) 
+0 or 1 
+40578 R/W E1 RH level on (1...100%) 1..100 
+40579 R/W E1 RH level off (0...99%) 0..99 
+40580 R/W E1 RH Vmin (0...10V, steps 0.1V) 0..100 
+40581 R/W E1 RH Vmax (0...10V, steps 0.1V) 0..100 
+40582 R/W E1 RH Vmin corresponds with ...% humidity 0..100 
+40583 R/W E1 RH Vmax corresponds with ...% humidity 0..100 
+40584 R/W E1 LS K3 Flow (0=exhaust, 1=supply) 
+If 1, 2 sensors on K2 and K3 is enabled 
+If 0, normal LS mode  
+0 or 1 
+40585 R/W E1 Unit Type (0=m3/h, 1= l/s). If l/s is selected, then all values for 
+registers in airflow units will be converted from m³/h to l/s. 
+0 or 1 
+40586 R/W E1 Minimum incoming fresh air temperature T1 for enabling the antifrost 
+protection of plate heat exchanger with electrical preheater (KW IN). 
+Only for DM. 0,1°C unit. Range -290..+999 meaning -29 .. +99,9°C 
+-290..+999 
+     
+40589 R/W E1 Enable automatic changeover between heat and cool. 
+When both postheater and postcooler are present, select whether to 
+enable the automatic change over which will override the comfort 
+parameter to T2 (see Comfort T2 regulation). This will allow the 
+automatic change over between heating and cooling. 
+0 or 1 
+40590 R/W E1 Select the high neutral band for changeover  
+If change over enabled, select the higher neutral band respect to the 
+desired comfort setpoint. A change over from heat to cool will 
+automatically occur when the measured temperature on the extract air 
+will exceed this band. Range13..70 meaning 1,3 .. 7°C 
+13..70 
+40591 R/W E1 Select the low neutral band for changeover  
+If change over enabled, select the lower neutral band respect to the 
+desired comfort setpoint. A change over from cool to heat will 
+automatically occur when the measured temperature on the extract air 
+will fall under this band. Range 13..50 meaning 1,3 .. 5°C 
+13..50 
+     
+40597 R/W E1 KW cycle time: period duration of PWM signal for the control of 
+electrical postheater. In sec. units. 
+6...60 sec 
+40598 R/W E1 CT time: duration of the inlet dampers opening/closing. In sec. units. 0...600 sec 
+ 
+ 
+ 
+ 
+  
+ 
+37 
+4.2.6 Time scheduler on TAC5 DG/DM/DT 
+ 
+4.2.6.1 Time scheduler structure 
+ 
+Time scheduler for 1 week 
+6 time segments per day 
+Each time segment has 8 parameters (10 registers are provided per time segment) 
+ 
+Register Name Description Accepted 
+values 
+41xx0 Start time  
+ 
+Starting time of this time segment. 
+Value = (100*hh)+mm       800 (8h00) 
+Value = -1: this time segment is not used  
+Each time segment runs until another time segment starts. 
+Factory default = -1 (time segment not used). 
+0..2359 
+-1 (not used) 
+ 
+41xx1 Working mode Working mode 
+0=OFF, 1=CA, 2=LS, 4=CPs, 6=TQ 
+0, 1, 2, 4 or 6 
+41xx2 Start/Stop 0: Fans stopped 
+1: Fans run 
+Factory default = 1 (Run). 
+Not used: always at 1 
+1 
+41xx3 Set point 1 If 41001=0 (OFF mode): not used. 
+ 
+If 41001=1 (CA mode):  
+Set point for supply airflow. 
+In m3/h units.  Range: 0..max of unit. 
+ 
+If 41001=2 (LS mode):  
+Percentage of nominal set point (if 40505=1: set point only for supply). 
+In % units.  Range: 0..100%. 
+ 
+If 41001=4 (CPs mode):  
+Percentage of nominal set point (if 40443=2: set point only for supply). 
+In % units.  Range: 0..100%. 
+ 
+If 41001=6 (TQ mode):  
+Set point for percentage of supply fan(s) maximum torque. 
+In %.  Range: 0..100%. 
+0..9999 
+41xx4 Set point 2 If 41001=0 (OFF mode): not used. 
+ 
+If 41001=1 (CA mode):  
+Set point for exhaust airflow. 
+In m3/h units.  Range: 0..max of unit. 
+ 
+If 41001=2 (LS mode):  
+   If 40505=0: Exhaust/Supply ratio.   Range: 5..999%. 
+   If 40505=1: Percentage of nominal set point for extraction.  Range: 
+1.100%. In % units.  
+ 
+If 41001=4 (CPs mode):  
+   If 40443=0 or 1: Exhaust/Supply ratio.   Range: 5..999%. 
+   If 40443=2: Percentage of nominal set point for extraction.  Range: 
+1.100%. In % units.  
+ 
+If 41001=6 (TQ mode):  
+Set point for percentage of exhaust fan(s) maximum torque. 
+In %.  Range: 0..100%. 
+0..9999 
+ 
+41xx5 T° Set point - 
+heating 
+Post heat set point 
+For NV, KWout, BA+ and KWext options 
+In 0,1 °C units. 
+Range 0..+999 meaning 0 .. +99,9°C. 0 is OFF 
+0..999 
+41xx6 T° Set point - 
+cooling 
+Cooling set point 
+For BA- and BA+/- options 
+In 0,1 °C units. 
+Range 0..+999 meaning 0 .. +99,9°C. 0 is OFF 
+0..999 
+41xx7 Bypass mode Selection of the bypass status 
+0=Bypass auto (based on measured T°1 and T°2) 
+1=Bypass forced to close 
+2=Bypass forced to open  
+0, 1 or 2 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 38 
+ 
+ 
+4.2.6.2 Time scheduler mapping  
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+41000..41007 R/W E1 Parameters for Monday Time segment 1  
+41010..41017 R/W E1 Parameters for Monday Time segment 2  
+41020..41027 R/W E1 Parameters for Monday Time segment 3  
+41030..41037 R/W E1 Parameters for Monday Time segment 4  
+41040..41047 R/W E1 Parameters for Monday Time segment 5  
+41050..41057 R/W E1 Parameters for Monday Time segment 6  
+     
+41060..41067 R/W E1 Parameters for Tuesday Time segment 1  
+41070..41077 R/W E1 Parameters for Tuesday Time segment 2  
+41080..41087 R/W E1 Parameters for Tuesday Time segment 3  
+41090..41097 R/W E1 Parameters for Tuesday Time segment 4  
+41100..41107 R/W E1 Parameters for Tuesday Time segment 5  
+41110..41117 R/W E1 Parameters for Tuesday Time segment 6  
+     
+41120..41127 R/W E1 Parameters for Wednesday Time segment 1  
+41130..41137 R/W E1 Parameters for Wednesday Time segment 2  
+41140..41147 R/W E1 Parameters for Wednesday Time segment 3  
+41150..41157 R/W E1 Parameters for Wednesday Time segment 4  
+41160..41167 R/W E1 Parameters for Wednesday Time segment 5  
+41170..41177 R/W E1 Parameters for Wednesday Time segment 6  
+     
+41180..41187 R/W E1 Parameters for Thursday Time segment 1  
+41190..41197 R/W E1 Parameters for Thursday Time segment 2  
+41200..41207 R/W E1 Parameters for Thursday Time segment 3  
+41210..41217 R/W E1 Parameters for Thursday Time segment 4  
+41220..41227 R/W E1 Parameters for Thursday Time segment 5  
+41230..41237 R/W E1 Parameters for Thursday Time segment 6  
+     
+41240..41247 R/W E1 Parameters for Friday Time segment 1  
+41250..41257 R/W E1 Parameters for Friday Time segment 2  
+41260..41267 R/W E1 Parameters for Friday Time segment 3  
+41270..41277 R/W E1 Parameters for Friday Time segment 4  
+41280..41287 R/W E1 Parameters for Friday Time segment 5  
+41290..41297 R/W E1 Parameters for Friday Time segment 6  
+     
+41300..41307 R/W E1 Parameters for Saturday Time segment 1  
+41310..41317 R/W E1 Parameters for Saturday Time segment 2  
+41320..41327 R/W E1 Parameters for Saturday Time segment 3  
+41330..41337 R/W E1 Parameters for Saturday Time segment 4  
+41340..41347 R/W E1 Parameters for Saturday Time segment 5  
+41350..41357 R/W E1 Parameters for Saturday Time segment 6  
+     
+41360..41367 R/W E1 Parameters for Sunday Time segment 1  
+41370..41377 R/W E1 Parameters for Sunday Time segment 2  
+41380..41387 R/W E1 Parameters for Sunday Time segment 3  
+41390..41397 R/W E1 Parameters for Sunday Time segment 4  
+41400..41407 R/W E1 Parameters for Sunday Time segment 5  
+41410..41417 R/W E1 Parameters for Sunday Time segment 6  
+ 
+  
+ 
+39 
+4.2.7 Season management on TAC5 DG/DM/DT 
+  
+4.2.7.1 Season management structure 
+ 
+3 features can be disabled by the calendar date  
+Each feature can be disabled for a period between 2 dates: from “Start date” to “End date”. 
+4 registers are provided to define those 2 dates. 
+ 
+Register Name Description Accepted 
+values 
+418xx Start day 
+ 
+Start date for disable of the feature  
+day of the month 
+1..31 
+ 
+418xx+1 Start month 
+ 
+Start date for disable of the feature  
+month 
+1..12 
+ 
+418xx+2 End day 
+ 
+End date for disable of the feature  
+day of the month 
+1..31 
+ 
+418xx+3 End month 
+ 
+End date for disable of the feature  
+month 
+1..12 
+ 
+ 
+If these 4 registers are configured, the feature is disabled from the start date up to (and including) the end date.   
+Set any of these to 0 to disable seasonal management of this feature. 
+ 
+ 
+4.2.7.2 Season management mapping 
+ 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+41800..41803 R/W E1 Season disable of the bypass: 
+ 
+41800: Start date: day-of-month, 1..31 
+41801: Start date: month, 1..12 
+41802: End date: day-of-month, 1..31 
+41803: End date: month, 1..12 
+ 
+Set any of these to 0 to disable seasonal management of the 
+bypass. 
+ 
+41804..41807 R/W E1 Season disable of the post heating: 
+For NV, KWout, BA+ and KWext options 
+ 
+41804: Start date: day-of-month, 1..31 
+41805: Start date: month, 1..12 
+41806: End date: day-of-month, 1..31 
+41807: End date: month, 1..12 
+ 
+Set any of these to 0 to disable seasonal management of the 
+post heating. 
+ 
+41808..41811 R/W E1 Season disable of the cooling: 
+For BA- and BA+/- options 
+ 
+41808: Start date: day-of-month, 1..31 
+41809: Start date: month, 1..12 
+41810: End date: day-of-month, 1..31 
+41811: End date: month, 1..12 
+ 
+Set any of these to 0 to disable seasonal management of the 
+cooling. 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 40 
+4.3 Specific Tables for TAC5 SC/F regulation 
+ 
+4.3.1 Visualization on TAC5 SC/F 
+ 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+40050 
+40051 
+R E1 FAN TYPE  
+32-bit value in 2 words. Ex.: 720054 
+32-bit value in 2 
+words 
+40052 R E1 Current Working Mode  
+0=OFF, 1=CA, 2=LS, 3=CPf, 4=CPs, (5=CAs), 6=TQ 
+9=INIT (temporary mode during init of pressure alarm or init of CPf 
+or CPs mode) 
+0, 1, 2, 3, 4 or 6 
+40053 R E1 Current speed as stop/low/medium/high 
+0=STOP, 1=LOW/I, 2=MEDIUM/II, 3=HIGH/III 
+Or 0=stopped and 1=running. 
+0, 1, 2 or 3 
+40054 R E1 Current set point (SET VAL): 
+Range 0..9999  
+Can be m3/h, Pa, 0.1V or % unit. See 40055. 
+0..9999 
+ 
+40055 R E1 Current Set point (SET VAL) unit: 
+0=m3/h; 1=Pa; 2=0,1V; 3= percentage of maximum torque (%) 
+Applies to 40054 only. 
+0, 1, 2 or 3 
+40056 R E1 Current set point for fan F1. 
+Can be m3/h, Pa, 0.1V or % unit. 
+0..max of unit 
+ 
+40057 R E1 Current set point for fan F2 
+Can be m3/h, Pa, 0.1V or % unit. 
+0..max of unit 
+ 
+     
+40059 R E1 TAC5 SC: current comfort T° setpoint, in 0,1 °C units. 
+Range 1..+999 meaning +0,1 .. +99,9°C 
+May be heating or cooling. 
+0 means supply heating and cooling are OFF. 
+0..999 
+40060 R E1 Current F2/F1 (unbalance between fan 2 and fan 1flows) in %: 
+Range 5 .. 999 % 
+5..999 
+40061 R E1 Pressure alarm data: 
+Fan 1: reference flow for pressure alarm, in m3/h 
+0..max of unit 
+40062 R E1 Pressure alarm data: 
+Fan 1: reference pressure for pressure alarm, in Pa 
+0..max of unit 
+40063 R E1 Pressure alarm data: 
+Fan 2: reference flow for pressure alarm, in m3/h 
+0..max of unit 
+40064 R E1 Pressure alarm data: 
+Fan 2: reference pressure for pressure alarm, in Pa 
+0..max of unit 
+40065 R E1 Fan 1 flow or torque (%TQ) 0..max of unit 
+40066 R E1 Fan 1 pressure 0..max of unit 
+40067 R E1 Fan 1 sent torque.  Range: 0..255 (127=50%) 0..255 
+40068 R E1 Fan 1 RPM 0..6000 
+     
+40073 R E1 Fan 2 flow or torque (%TQ) 0..max of unit 
+40074 R E1 Fan 2 pressure 0..max of unit 
+40075 R E1 Fan 2 sent torque.  Range: 0..255 (127=50%) 0..255 
+40076 R E1 Fan 2 RPM 0..6000 
+     
+40081 
+40082 
+R E1 working hours of the unit:  
+RUN TIME: xxxxxx h 
+32-bit value in 2 words. 
+0..999999 
+     
+40085 R E1 CTin option: Damper status 
+0=CLOSED or CLOSING, 1=OPENING, 2=OPEN 
+0, 1 or 2 
+40086 R E1 post ventilation status 
+0=NO, 1=active 
+0 or 1 
+40087 R E1 Current control mode: indicates what controls the airflows 
+1 = FATAL ERROR: Fans are stopped 
+2 = FIRE ALARM (registers 40511 and 40512) 
+3 = RC: remote control RC TAC5  
+4 = EXTERNAL CONTACTS: K1-K2-K3 contacts  
+5 = TIMESCHEDULER configured by the RC TAC5  
+6 = TIMESCHEDULER configured by MODBUS or by the GRC 
+7 = MODBUS register 40201 
+1..11 
+ 
+41 
+8 = BYPASS (registers 40516 and 40517). Unused for TAC5 F 
+9 = BOOST (registers 40548 and 40549) 
+10 = MODBUS registers 40204 and 40205 
+11 = KNX 
+40088 R E1 TAC5 SC: Antifreeze status of the external exchangers: 
+0=OFF 
+1= antifreeze of the water exchanger BA+ or BA+/- is activated 
+2= antifreeze of the cold-water exchanger BA-  is activated 
+3= antifreeze of the warm and cold-water exchangers BA+ and BA-  
+are activated 
+0, 1, 2 or 3  
+40089 R E1 TAC5 SC: Current comfort T° heating set point, in 0,1 °C units. 
+Range 1..+999 meaning +0,1 .. +99,9°C 
+0 is heating OFF. 
+0..999 
+40090 R E1 TAC5 SC: Current comfort T° cooling set point, in 0,1 °C units. 
+Range 1..+999 meaning +0,1 .. +99,9°C 
+0 is cooling OFF. 
+0..999 
+     
+40095 R E1 TAC5 SC: MK3 state  
+0=CLOSED, 1=OPEN, 2=OPENING, 3=CLOSING 
+0, 1, 2 or 3 
+     
+40150 R E1 Status of digital inputs block 0.  
+Bitmap with 1 bit per input. 0=OFF, 1=ON. 
+Bit 0: K1 
+Bit 1: K2 (as on/off)  
+Bit 2: K3 (as on/off) 
+Bit 3: IN1 (Master selection) 
+Bit 4: IN2 (fire_alarm or dPa_alarm) 
+Bit 5: IN3 (auto_mode) 
+Bit 6: IN4 (boost) 
+Bit 12: IN10 (TAC5 SC: SATBA Postcooling OFF) 
+Bit 13: IN11 (TAC5 SC: SATBA select heating or cooling, open = 
+heating, closed = cooling) 
+0..16383 
+40152 R E1 K1 Analogue voltage,  
+K1 is a digital input but it is shown here for completeness. 
+0..100 = 0..10,0V 
+0..100 
+40153 R E1 K2 Analogue voltage,  
+0..100 = 0..10,0V 
+0..100 
+40154 R E1 K3 Analogue voltage,  
+0..100 = 0..10,0V 
+0..100 
+     
+40156 R E1 TAC5 SC: Temperature T°2, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+     
+40159 R E1 TAC5 SC: Temperature T°5, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+     
+40161 R E1 TAC5 SC: Temperature T°7, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+40162 R E1 TAC5 SC: Temperature T°8, in 0,1°C units. 
+Range -990 .. +990 meaning -99.0 .. +99.0 °C.  
+-999 means open circuit. 
++999 means short circuit. 
+-999..999 
+40163 R E1 Backward fans inlet diff pressure, Analogue input PR1,  
+0..100 = 0..10,0V 
+0..100 
+40164 R E1 Backward fans inlet diff pressure, Analogue input PR2, 
+0..100 = 0..10,0V 
+0..100 
+40165 R E1 Backward fans inlet diff pressure, Analogue input PR1,  
+0..16383 = 0..10,0V 
+0..16383 
+40166 R E1 Backward fans inlet diff pressure, Analogue input PR2, 
+0..16383 = 0..10,0V 
+0..16383 
+     
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 42 
+40168 R E1 Status of digital outputs block 0.  
+Bitmap with 1 bit per input. 0=OFF, 1=ON. 
+Bit 0: AL1 alarm, 1=” alarm” 
+Bit 6: OR1 SAT “pressure alarm” 
+Bit 7: OR2 SAT “fan on” 
+Bit 10: TAC5 SC: SATBA WP 
+Bit 11: TAC5 SC: SATBA OUT9 KWext 
+0..4095 
+     
+40174 R E1 TAC5 SC: Analogue output OUT7.  
+Post heat/cool BA+ or BA+/- option: opening of the 3-ways valve 
+In 0,1V units, range 0..100 meaning 0,0V .. 10.0V. 
+0..100 
+40175 R E1 TAC5 SC: Analogue output OUT8.  
+Post cool BA- option: opening of the 3-ways valve 
+In 0,1V units, range 0..100 meaning 0,0V .. 10.0V. 
+0..100 
+     
+40188 R E1 TAC5 SC: output external KW (SAT BA/KW) 
+Post heat SAT KW option: power of the electric coil (%) 
+In % units, range 0..100 meaning 0..100%. 
+0..100 
+ 
+ 
+  
+ 
+43 
+4.3.2 Control on TAC5 SC/F 
+ 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+40200 R/W R Selection of the control master (who will determine speed). 
+0= RC TAC5 determines speed 
+1=MODBUS determines speed via register 40201 
+2=TIMETABLE determines airflows (automatic working) 
+3= MODBUS determines airflows via registers 40204/40205 
+0, 1, 2 or 3 
+40201 R/W R Speed selection via Modbus (only if 40200=1) 
+0=STOP 
+1=LOW-pos.I 
+2=MEDIUM-pos.II 
+3=HIGH-pos.III 
+0, 1, 2 or 3 
+40204 R/W R Fan 1 airflow/torque (%TQ) selection via Modbus (only if 40200=3) 
+Range 0..9999 
+min..max of unit 
++ 0 
+40205 R/W R Fan 2 airflow/torque (%TQ) selection via Modbus (only if 40200=3) 
+Range 0..9999 
+min..max of unit 
++ 0 
+     
+40221 R/W R External pressure alarm 
+0=No alarm 
+1=Pressure alarm activated 
+0 or 1 
+40222 R/W R Fire alarm 
+0=No alarm 
+1=Fire alarm activated 
+0 or 1 
+     
+40224 R/W R Override: force automatic mode. 
+Set to 1 to force automatic mode. 
+This is equivalent to activating the “automatic mode” input, if any. 
+0 or 1 
+40225 R/W R TAC5 SC: ON/OFF Post heat: to deactivate the post heating 
+0=Post heating allowed 
+1=Post heating not allowed 
+0 or 1 
+     
+40226 R/W R Fire alarm fan 1 airflow/torque (%TQ) 
+0= fan 1 is stopped in fire alarm 
+1= fan 1 is running in fire alarm 
+0 or 1 
+40227 R/W R Fire alarm fan 2 airflow/torque (%TQ) 
+0= fan 2 is stopped in fire alarm 
+1= fan 2 is running in fire alarm 
+0 or 1 
+40228 R/W R Boost control 
+0= Boost function not activated 
+1= Boost function activated 
+0 or 1 
+40229 R/W R TAC5 SC: ON/OFF Post cool: to deactivate the cooling 
+0= cooling allowed 
+1= cooling not allowed 
+0 or 1 
+40230 R/W R TAC5 SC: Cooling or heating selection: 
+0= heating position 
+1= cooling position 
+0 or 1 
+40231 R/W R 
+ 
+TAC5 SC: Override: force MK3 active. 
+Set to 1 to force “MK3” mode. 
+0 or 1 
+     
+40250 R/W E1 RESET 
+Perform a reset to clear pending alarms and resume normal working. 
+Required to recover from fatal alarms. 
+This operation takes about 1 second. The Modbus write command will 
+be answered immediately, then the operation will be executed. 
+Modbus commands will not be answered during the operation. 
+Read: always 0. 
+Write: 1 to perform reset. 
+0 or 1 
+40251 R/W E1 RESET TO FACTORY DEFAULT VALUES. 
+Reset setup and advanced setup parameters to their factory default 
+values. 
+This operation takes about 3 seconds. The Modbus write command 
+will be answered immediately, then the operation will be executed. 
+Modbus commands will not be answered during the operation. 
+Read: always 0. 
+Write: 1 to perform reset. 
+0 or 1 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 44 
+40252 R/W E1 RESET RUN TIME 
+Reset run time (working hours) to zero. 
+Read: always 0 
+Write: 1 to perform reset. 
+0 or 1 
+40253 R/W E1 Pressure alarm initialization  
+Start the initialization 
+Will be accepted in CA and LS mode only! 
+Initialization is: run with reference flow set in 40254, measure 
+pressure, store reference pressure.  
+Working mode is set to 9 during the initialization. 
+Read: 0=idle, 1=start. 
+Write: 1 to start 
+0 or 1 
+40254 R/W E1 Pressure initialization  
+Initialization flow/torque 1: Reference flow/torque (%TQ) used for: 
+- CA/LS mode: Pa alarm initialization (fan 1 fan flow) 
+- CPs mode: initialization (fan 1 flow or torque)  
+Range is limited to the minimum and maximum flow/torque of the fans 
+used 
+min..max of unit 
+40255 R/W E1 Do CPf mode initialization. 
+Start the initialization 
+Will be accepted in CPf mode only! 
+- 1 fan only or 2 dependent fans: run fan 1 with reference airflow set in 
+40254, compute pressure, store reference pressure. 
+- 2 independent fans: run fan 1 with reference airflow set in 40254, run 
+fan 2 with reference airflow set in 40257, compute pressures, store 
+reference pressures. 
+ 
+Working mode is set to 9 during the initialization. 
+Read: always 0. 
+Write: 1 to start 
+0 or 1 
+40256 R/W E1 CPs mode initialization. 
+Start the initialization 
+Will be accepted in CPs mode only! 
+- 1 fan only or 2 dependent fans: run fan 1 with reference airflow 
+/torque set in 40254, measure K2 voltage, store reference voltage. 
+- 2 independent fans: run fan 1 with reference airflow /torque set in 
+40254, run fan 2 with reference airflow/torque set in 40257, measure 
+K2 voltage for F1, measure K3 voltage for F2, store reference 
+voltages. 
+ 
+Working mode is set to 9 during the initialization. 
+Read: 0=idle, 1=start. 
+Write: 1 to start 
+0 or 1 
+40257 R/W E1 Initialization flow/torque 2: Reference flow/torque (%TQ) used for: 
+- CPf mode: initialization (fan 2 flow with 2 independent fans)  
+- CPs mode: initialization (fan 2 flow or torque with 2 independent 
+fans)  
+Range is limited to the minimum and maximum flow/torque of the fans 
+used 
+min..max of unit 
+ 
+ 
+  
+ 
+45 
+4.3.3 Alarms on TAC5 SC/F 
+ 
+See our Alarm document for more details 
+Register Read / 
+Write 
+Type Alarm bits  
+Alarm flags are bits in holding registers. 1 bit per alarm, 16 
+alarms per register. 
+Bit is 1 if alarm is active. Read only. 
+Accepted 
+values 
+40300 R E1 Bit 0:  ALARM_PROGRAM_ERROR 
+Bit 1:  ALARM_DATA_ERROR 
+Bit 2:  ALARM_FAN1 
+Bit 4:  ALARM_FAN2 
+Bit 6:  ALARM_PRESSURE_F1 
+Bit 7:  ALARM_PRESSURE_F2 
+Bit 10: ALARM_T2_OPEN (TAC5 SC) 
+Bit 11: ALARM_T2_SHORT (TAC5 SC) 
+0..65535 
+ 
+40301 R E1 Bit 0:  ALARM_T5_OPEN (TAC5 SC) 
+Bit 1:  ALARM_T5_SHORT (TAC5 SC) 
+Bit 4:  ALARM_T7_OPEN (TAC5 SC) 
+Bit 5:  ALARM_T7_SHORT (TAC5 SC) 
+Bit 6:  ALARM_T8_OPEN (TAC5 SC) 
+Bit 7:  ALARM_T8_SHORT (TAC5 SC) 
+Bit 8:  ALARM_CP_FAN_1_HIGH 
+Bit 9:  ALARM_CP_FAN_1_LOW 
+Bit 10: ALARM_CP_FAN_2_HIGH 
+Bit 11: ALARM_CP_FAN_2_LOW 
+Bit 12: ALARM_LS_FAN_1_LOW 
+Bit 13: ALARM_LS_FAN_1_HIGH 
+0..65535 
+ 
+40302 R E1 Bit 0:  ALARM_LS_FAN_2_LOW 
+Bit 1:  ALARM_LS_FAN_3_HIGH 
+Bit 4:  ALARM_CA_FAN_1_LOW 
+Bit 5:  ALARM_CA_FAN_1_HIGH 
+Bit 8:  ALARM_CA_FAN_2_LOW 
+Bit 9:  ALARM_CA_FAN_2_HIGH 
+Bit 12: ALARM_PA_INIT_F1_NOT_STAB 
+Bit 13: ALARM_PA_INIT_F2_NOT_STAB 
+Bit 14: ALARM_PA_INIT_F1_TOO_LOW 
+Bit 15: ALARM_PA_INIT_F2_TOO_LOW 
+0..65535 
+ 
+40303 R E1 Bit 0:  ALARM_PA_INIT_F1_NOT_ACHIEVED 
+Bit 1:  ALARM_PA_INIT_F2_NOT_ACHIEVED 
+Bit 2:  ALARM_PA_INIT_F1_TOO_HIGH 
+Bit 3:  ALARM_PA_INIT_F2_TOO_HIGH 
+Bit 4:  ALARM_MAINT_WARN 
+Bit 5:  ALARM_MAINT_FATAL 
+Bit 6:  ALARM_DPA 
+Bit 7:  ALARM_FIRE 
+Bit 8:  ALARM_END_OF_FIRE_ALARM 
+Bit 9:  ALARM_VLOWERVLOW 
+Bit 10: ALARM_VHIGERVHIGH 
+Bit 15: ALARM_POSTHEAT_SETPOINT (comfort T° too low, for 
+TAC5 SC) 
+0..65535 
+ 
+40304 R E1 Bit 0:  ALARM_POSTCOOLING_SETPOINT (comfort T° too high, for 
+TAC5 SC) 
+Bit 1: ALARM_SAT-BA_MODULE (SAT-BA module is configured but 
+does not respond, for TAC5 SC) 
+Bit 3: ALARM T5_AF_STOP, AF_REC_ON, STOP FANS (TAC5 SC) 
+Bit 7: ALARM AF BA+ STOP (TAC5 SC) 
+Bit 8: ALARM AF BA- STOP (TAC5 SC) 
+Bit 9: ALARM AF BA+/- STOP (TAC5 SC) 
+0..65535 
+ 
+ 
+ 
+  
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 46 
+4.3.4 SETUP parameters on TAC5 SC/F 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+40400 R/W E1 Current time: seconds 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+0..59 
+40401 R/W E1 Current time: minutes: 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+0..59 
+40402 R/W E1 Current time: hours: 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+0..23 
+40403 R/W E1 Current date: day of month: 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+1..31 
+40404 R/W E1 Current time: month: 
+1=January 
+12=December 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+1..12 
+40405 R/W E1 Current time: year: 
+(Do not write the time register cyclically, doing so will slow the clock 
+counter) 
+2000..2099 
+ 
+40406 R E1 Current time: Day of the week: 
+0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday, 
+5=Saturday, 6=Sunday. 
+This register is read only! The weekday is automatically 
+calculated when the date changes. 
+0..6 
+   Notes on the real time clock: 
+• The range of the clock is 1 jan 2000 .. 31 dec 2099. 
+• The date is validated when written. 
+• Automatic leap year correction. 
+• Automatic Daylight Saving Time (DST) adjustment following EU 
+rules. Adjust +01:00 at 2:00 on the last Sunday in March. Adjust -
+1:00 at 3:00 at the last Sunday in October. 
+ 
+40420 R/W E1 LANGUAGE 
+language on the Remote control RC TAC5 
+0=GB(English), 1=F(French), 2=D(German), 3=NL(Dutch) 
+0, 1, 2 or 3 
+40421 
+40422 
+R/W E1 FAN TYPE 
+32-bit value in 2 words. 
+Cannot be changed if a RECTYPE is set. 
+32-bit value in 2 
+words 
+40423 R/W E1 NUMBER OF FANS, (# FANS) 1 or 2 
+     
+40425 R/W E1 TAC5 SC: Post heat set point 
+For BA+ and KWext options 
+In 0,1 °C units. 
+Range 0..+999 meaning 0 .. +99,9°C 
+0 is OFF 
+0..999 
+40426 R/W E1 FANS WORKING MODE 
+0=OFF: unit is stopped 
+1=CA: constant airflows 
+2=LS: airflow linked to 0-10V input signal 
+3=CPf: constant pressure with flow calculation  
+4=CPs: constant pressure with sensor 
+6=TQ: constant torque 
+9=INIT (9 is a temporary mode during initialization of pressure for 
+pressure alarm or CPs mode) 
+0..9 
+40427 R/W E1 F2/F1 ratio (if 2 dependent fans). 
+To create an unbalance between flows or torques 
+5..999 
+40428 R/W E1 Airflow selection in CA mode, % of maximum torque in TQ mode: 
+Speed 1 (K1 – Pos.I) Range 0..9999 
+0..max of unit 
+40429 R/W E1 Airflow selection in CA mode, % of maximum torque in TQ mode: 
+Speed 2 (K2 – Pos.II) Range 0..9999 
+0..max of unit 
+40430 R/W E1 Airflow selection in CA mode, % of maximum torque in TQ mode: 
+Speed 3 (K3 – Pos.III) Range 0..9999 
+0..max of unit 
+40431 R/W E1 Pressure alarm selection 
+For CA and LS mode only: 
+0 or 1 
+ 
+47 
+Pressure alarm selection 
+0=No pressure alarm 
+1=Pressure alarm selected 
+40432 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Pressure offset on fan 1 (increase of pressure) 
+In Pa units 
+25..999 
+40433 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Pressure offset on fan 2 (increase of pressure) 
+In Pa units 
+25..999 
+40434 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Reference flow on fan 1 for pressure alarm 
+In m3/h units 
+min..max of unit 
+40435 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Pressure at reference flow on fan 1. 
+In Pa units 
+0..max of unit 
+40436 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Reference flow on fan 2 for pressure alarm 
+In m3/h units 
+min..max of unit 
+40437 R/W E1 Pressure alarm data 
+For CA and LS mode only: 
+Pressure at reference flow on fan 2. 
+In Pa units 
+0..max of unit 
+40438 R/W E1 Signal link data 
+For LS mode only: 
+Minimum signal value: Vmin 
+In 0,1V units, 0..100 meaning 0..10,0V 
+0..100 
+40439 R/W E1 Signal link data 
+For LS mode only: 
+Maximum signal value: Vmax 
+In 0,1V units, 0..100 meaning 0..10,0V 
+0..100 
+40440 R/W E1 Signal link data 
+For LS mode only: 
+Airflow/torque at Vmin 
+In m3/h units or % max torque 
+min..max of unit 
+40441 R/W E1 Signal link data 
+For LS mode only: 
+Airflow/torque at Vmax 
+In m3/h units or % max torque 
+min..max of unit 
+40442 R/W E1 Sleep mode reduction on K3  
+For LS, CPf and CPs mode only and with 1 fan or 2 dependent fans: 
+reduction in % of the nominal set point 
+In % unit 
+1..100 
+40443 R/W E1 For all modes and with 2 fans: 
+0 = set point on F1 (to have 2 dependent fans) 
+2 = set point on F1 + set point on F2 (to have 2 independent fans) 
+0 or 2 
+40444 R/W E1 For CPf and CPs mode only: 
+Initialization flow/torque 1: Reference flow/torque used for: 
+- CPf mode initialization (flow fan 1) 
+- CPs mode initialization (flow/torque fan 1) 
+min..max of unit 
+40445 R/W E1 CPf mode: Set point 1 pressure for supply for fan 1. 
+ (Pa) 
+25..999 
+40446 R/W E1 For CPs mode only: 
+Set point 1 voltage for fan 1. 
+In 0,1V units, range 0..100 is 0..10.0V. 
+0..100 
+40447 R/W E1 TAC5 SC: Cooling set point 
+For BA- and BA+/- options 
+In 0,1 °C units. 
+Range 0..+999 meaning 0 .. +99,9°C. 0 is OFF 
+0..999 
+40448 R/W E1 Constant pressure data 
+For CPs mode only with 2 independent fans: 
+Reference flow/torque 2 used for measuring pressure.  
+Flow/torque fan 2 
+min..max of unit 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 48 
+In m3/h units or % max torque 
+40449 R/W E1 Constant pressure data 
+For CPs mode only with 2 independent fans:  
+Reference voltage for fan 2 to keep constant 
+In 0,1V units, range 0..100 is 0..10.0V. 
+0..100 
+40450 R/W E1 CPf mode: set point 2 pressure for fan 2 with 2 independent fans (Pa) 25..999 
+40451 R/W E1 If 2 independent fans, set point for fan 2: Airflow selection in CA 
+mode, percentage of maximum torque in TQ mode: 
+Speed 1 (K1 – Pos.I) Range 0..9999 
+min..max of unit 
+40452 R/W E1 If 2 independent fans, set point for fan 2: Airflow selection in CA 
+mode, percentage of maximum torque in TQ mode: 
+Speed 2 (K2 – Pos.II) Range 0..9999 
+min..max of unit 
+40453 R/W E1 If 2 independent fans, set point for fan 2: Airflow selection in CA 
+mode, percentage of maximum torque in TQ mode: 
+Speed 3 (K3 – Pos.III) Range 0..9999 
+min..max of unit 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+49 
+4.3.5 ADVANCED SETUP parameters on TAC5 SC/F 
+ 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+40500 R/W E1 Stop the fans in pressure alarm 
+For CA and LS mode only: 
+0=NO, 1=YES 
+0 or 1 
+40501 R/W E1 Stop the fans if signal on K2 is lower than Vlow 
+For LS mode only 
+0=NO, 1=YES 
+0 or 1 
+40502 R/W E1 If 40501 is 1, value of Vlow 
+For LS mode only  
+In 0,1V units, range 0..100 meaning 0..10,0V 
+0..100 
+40503 R/W E1 Stop the fans if signal on K2 is higher than Vhigh 
+For LS mode only 
+0=NO, 1=YES 
+0 or 1 
+40504 R/W E1 If 40503 is 1, value of Vhigh 
+For LS mode only  
+In 0,1V units, range 0..100 meaning 0..10,0V 
+0..100 
+     
+40506 R/W E1 Reaction speed in CPs mode 
+For CPs mode only 
+Range 10..0 (10=fastest (default value) – 0=slowest) 
+0..10 
+40507 R/W E1 Reaction logic in CPs mode 
+For CPs mode only 
+0=POSITIVE: airflow increase if Vk2 > set point 
+1=NEGATIVE: airflow increase if Vk2 < set point 
+0 or 1 
+40508 R/W E1 Start torque 
+In % unit 
+2..98 
+40509 R/W E1 “FANS OFF” allowed? 
+If 0, the ventilation cannot be stopped (above in alarm) 
+0=NO, 1=YES 
+0 or 1 
+40510 R/W E1 Fire alarm: normally open or closed contact selection 
+0 = normally open (N.O.) 
+1 = normally closed (N.C.) 
+0 or 1 
+40511 R/W E1 Fire alarm: airflow selection  
+Airflow/torque for fan 1. 
+In m3/h units or % max torque. 
+min..max of unit 
++ 0 
+40512 R/W E1 Fire alarm: airflow selection  
+Airflow/torque for fan 2. 
+In m3/h units or % max torque. 
+min..max of unit 
++ 0 
+     
+40526 R/W E1 TAC5 SC:  BA+ option 
+Post heat NV or BA+ speed  
+Range 10..1 (10=fastest, 1=slowest) 
+1..10 
+40527 R/W E1 TAC5 SC: KWext option 
+Post heat KWext PID: PB (Gain = 100/PB) 
+In % units 
+1..100 
+40528 R/W E1 TAC5 SC: KWext option 
+Post heat KWext PID: Ti 
+In sec. units 
+0..9999 
+40529 R/W E1 TAC5 SC: KWext option 
+Post heat KWext PID: Td 
+In sec. units 
+0..9999 
+     
+40532 R/W E1 Post ventilation 
+Activation of the post-ventilation 
+0=NO, 1=YES 
+0 or 1 
+40533 R/W E1 Post ventilation  
+Selection of the post-ventilation time 
+In sec. units 
+0..9999 
+40534 R/W E1 Fan run time 
+Activation of the telling of the working hours of the unit 
+0=NO, 1=YES 
+0 or 1 
+40535 R/W E1 Fan run time 
+To display the working hours on the RC or GRC TAC5 0=NO, 1=YES 
+0 or 1 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 50 
+40536 R/W E1 Fan run time 
+To activate a "SERVICE alarm" after a predetermined time 
+0=NO, 1=YES 
+0 or 1 
+40537 
+40538 
+R/W E1 Fan run time 
+Time for the "SERVICE alarm" 
+In hours units 
+32-bit value in 2 words. 
+0 .. 999999 
+40539 R/W E1 Fan run time 
+To stop the fans after a predetermined time 
+0=NO, 1=YES 
+0 or 1 
+40540 
+40541 
+R/W E1 Fan run time 
+Time to stop the fans in "SERVICE alarm" 
+In hours units 
+32-bit value in 2 words. 
+0 .. 999999 
+40542 R/W E1 To display only the alarms on the RC TAC5 
+(Airflows, pressures and other parameters are hidden) 
+0=NO, 1=YES 
+0 or 1 
+40543 R/W E1 MODBUS configuration 
+Modbus Address of the TAC5 circuit 
+1..247 
+40546 R/W E1 Access code for RC TAC5 
+To require a code to get access to setup menus 
+0=NO, 1=YES 
+0 or 1 
+40547 R/W E1 Access code for RC TAC5 
+Code selection 
+0..9999 
+40548 R/W E1 Boost data 
+Fan 1 airflow/torque when “Boost “is activated. 
+In m3/h units or % max torque. 
+min..max of unit 
++ 0 
+40549 R/W E1 Boost data 
+Fan 2 airflow/torque when “Boost “is activated.  
+In m3/h units or % max torque 
+min..max of unit 
++ 0 
+40550 R/W E1 TAC5 SC: SAT BA/KW option (external heating or cooling) 
+Selection of the external heating or cooling exchanger: 
+0 = none 
+1 = BA + 
+2 = BA -  
+3 = BA+/BA- (2 exchangers) 
+4 = BA+/- (1 exchanger for heating and cooling) 
+5 = KW 
+6 = KW / BA - 
+0..9 
+40551 R/W E1 TAC5 SC: BA-  
+Cooling BA- speed  
+Range 10..1 (10=fastest, 1=slowest) 
+1..10 
+40552 R/W E1 TAC5 SC: BA+ Antifreeze T° threshold: 
+In 0,1°C units. Range 0..+999 meaning 0 .. +99,9°C 
+0..999 
+40553 R/W E1 TAC5 SC: BA- Antifreeze T° threshold: 
+In 0,1°C units. Range 0..+999 meaning 0 .. +99,9°C 
+0..999 
+     
+40555 R/W E1 IN2 mode (0=fire_alarm, 1=pressure alarm) 0 or 1 
+40556 R/W E1 OR1 mode (0=Pa_alarm, 1=fan_on 2 = CT_IN  
+TAC5 SC: 3 = MK3) 
+0, 1, 2, 3 
+40557 R/W E1 OR2 mode (0=Pa_alarm, 1=fan_on 2 = CT_IN  
+TAC5 SC: 3 = MK3) 
+0, 1, 2, 3 
+     
+40566 R/W E1 TAC5 SC: Post heat: stop fans if T5 < 5°C (0=NO 1=YES) 0 or 1 
+     
+40570 R/W E1 TAC5 SC: Comfort T2 regulation - on T5 (supply) or T2 (ambient) 
+0=T5 (default), 1=T2  
+0 or 1 
+40571 R/W E1 TAC5 SC: Comfort T2 regulation - speed  
+0..10, 0=slow, 10=fast (8 is default) 
+0..10 
+40572 R/W E1 TAC5 SC: Comfort T2 regulation - T5 MIN temp 
+In 0,1°C units. Range 0 .. +200 meaning 0,0 .. +20,0°C. 
+0..200 
+40573 R/W E1 TAC5 SC: Comfort T2 regulation - T5 MAX temp  
+In 0,1°C units. Range 160 .. +500 meaning 16,0 .. +50,0°C. 
+T5 MAX must also be >= T5 MIN +2°C. If T5 MIN is changed, T5 MAX 
+will automatically be increased to be >= T5 MIN +2°C. 
+160..500 
+ 
+ 
+ 
+51 
+4.3.6 Time scheduler on TAC5 SC/F 
+ 
+4.3.6.1 Time scheduler structure 
+ 
+Time scheduler for 1 week 
+6 time segments per day 
+Each time segment has 5 parameters (10 registers are provided per time segment) 
+ 
+Register Name Description Accepted 
+values 
+41xx0 Start time  
+ 
+Starting time of this time segment. 
+Value = (100*hh)+mm       800 (8h00) 
+Value = -1: this time segment is not used  
+Each time segment runs until another time segment starts. 
+ 
+Factory default = -1 (time segment not used). 
+0..2359 
+-1 (not used) 
+ 
+41xx1 Working mode Working mode 
+0=OFF, 1=CA, 2=LS, 3=CPf, 4=CPs; 6=TQ 
+0, 1, 2, 3, 4 or 
+6 
+41xx2 Start/Stop 0: Fans stopped 
+1: Fans run 
+Factory default = 1 (Run). 
+Not used: always at 1 
+1 
+41xx3 Set point 1 If 41001=0 (OFF mode): not used. 
+ 
+If 41001=1 (CA mode):  
+Set point for fan 1 airflow. 
+In m3/h units.  Range: 0..max of unit. 
+ 
+If 41001=2 (LS mode):  
+Percentage of nominal set point for fan 1. 
+In % units.  Range: 0..100%. 
+ 
+If 41001=3 (CPf mode):  
+Percentage of nominal set point for fan 1. 
+In % units.  Range: 0..100%. 
+ 
+If 41001=4 (CPs mode):  
+Percentage of nominal set point for fan 1. 
+In % units.  Range: 0..100%. 
+ 
+If 41001=6 (TQ mode):  
+Set point for percentage of fan 1 maximum torque. 
+In %.  Range: 0..100%. 
+0..9999 
+41xx4 Set point 2 If 2 fans present: 
+ 
+If 41001=0 (OFF mode): not used. 
+ 
+If 41001=1 (CA mode):  
+Set point for fan 1 airflow. 
+In m3/h units.  Range: 0..max of unit. 
+ 
+If 41001=2 (LS mode):  
+- if 2 dependent fans: fan 2/fan 1 ratio. Range: 5..999%. 
+- if 2 independent fans: Percentage of nominal set point for fan 
+2.  Range: 0..100%. In % units.  
+ 
+If 41001=3 (CPf mode):  
+- if 2 dependent fans: fan 2/fan 1 ratio. Range: 5..999%. 
+- if 2 independent fans: Percentage of nominal set point for fan 
+2.  Range: 0..100%. In % units. 
+ 
+If 41001=4 (CPs mode):  
+- if 2 dependent fans: fan 2/fan 1 ratio. Range: 5..999%. 
+- if 2 independent fans: Percentage of nominal set point for fan 
+2.  Range: 0..100%. In % units. 
+ 
+If 41001=6 (TQ mode):  
+Set point for percentage of fan 2 maximum torque. 
+In %.  Range: 0..100%. 
+0..9999 
+ 
+Installation and user’s manual TAC5 + MODBUS TABLE 
+ 52 
+41xx5 T° Set point - 
+heating 
+TAC5 SC: Post heat set point 
+For BA+ and KWext options 
+In 0,1 °C units. 
+Range 0..+999 meaning 0 .. +99,9°C 
+0 is OFF 
+0..999 
+41xx6 T° Set point - 
+cooling 
+TAC5 SC: Cooling set point 
+For BA- and BA+/- options 
+In 0,1 °C units. 
+Range 0..+999 meaning 0 .. +99,9°C 
+0 is OFF 
+0..999 
+ 
+ 
+4.3.6.2 Time scheduler mapping 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+41000..41006 R/W E1 Parameters for Monday Time segment 1  
+41010..41016 R/W E1 Parameters for Monday Time segment 2  
+41020..41026 R/W E1 Parameters for Monday Time segment 3  
+41030..41036 R/W E1 Parameters for Monday Time segment 4  
+41040..41046 R/W E1 Parameters for Monday Time segment 5  
+41050..41056 R/W E1 Parameters for Monday Time segment 6  
+     
+41060..41066 R/W E1 Parameters for Tuesday Time segment 1  
+41070..41076 R/W E1 Parameters for Tuesday Time segment 2  
+41080..41086 R/W E1 Parameters for Tuesday Time segment 3  
+41090..41096 R/W E1 Parameters for Tuesday Time segment 4  
+41100..41106 R/W E1 Parameters for Tuesday Time segment 5  
+41110..41116 R/W E1 Parameters for Tuesday Time segment 6  
+     
+41120..41126 R/W E1 Parameters for Wednesday Time segment 1  
+41130..41136 R/W E1 Parameters for Wednesday Time segment 2  
+41140..41146 R/W E1 Parameters for Wednesday Time segment 3  
+41150..41156 R/W E1 Parameters for Wednesday Time segment 4  
+41160..41166 R/W E1 Parameters for Wednesday Time segment 5  
+41170..41176 R/W E1 Parameters for Wednesday Time segment 6  
+     
+41180..41186 R/W E1 Parameters for Thursday Time segment 1  
+41190..41196 R/W E1 Parameters for Thursday Time segment 2  
+41200..41206 R/W E1 Parameters for Thursday Time segment 3  
+41210..41216 R/W E1 Parameters for Thursday Time segment 4  
+41220..41226 R/W E1 Parameters for Thursday Time segment 5  
+41230..41236 R/W E1 Parameters for Thursday Time segment 6  
+     
+41240..41246 R/W E1 Parameters for Friday Time segment 1  
+41250..41256 R/W E1 Parameters for Friday Time segment 2  
+41260..41266 R/W E1 Parameters for Friday Time segment 3  
+41270..41276 R/W E1 Parameters for Friday Time segment 4  
+41280..41286 R/W E1 Parameters for Friday Time segment 5  
+41290..41296 R/W E1 Parameters for Friday Time segment 6  
+     
+41300..41306 R/W E1 Parameters for Saturday Time segment 1  
+41310..41316 R/W E1 Parameters for Saturday Time segment 2  
+41320..41326 R/W E1 Parameters for Saturday Time segment 3  
+41330..41336 R/W E1 Parameters for Saturday Time segment 4  
+41340..41346 R/W E1 Parameters for Saturday Time segment 5  
+41350..41356 R/W E1 Parameters for Saturday Time segment 6  
+     
+41360..41366 R/W E1 Parameters for Sunday Time segment 1  
+41370..41376 R/W E1 Parameters for Sunday Time segment 2  
+41380..41386 R/W E1 Parameters for Sunday Time segment 3  
+41390..41396 R/W E1 Parameters for Sunday Time segment 4  
+41400..41406 R/W E1 Parameters for Sunday Time segment 5  
+41410..41416 R/W E1 Parameters for Sunday Time segment 6  
+ 
+ 
+53 
+ 
+4.3.7 Season management on TAC5 SC 
+  
+4.3.7.1 Season management structure 
+ 
+3 features can be disabled by the calendar date  
+Each feature can be disabled for a period between 2 dates: from “Start date” to “End date”. 
+4 registers are provided to define those 2 dates. 
+ 
+Register Name Description Accepted 
+values 
+418xx Start day 
+ 
+Start date for disable of the feature  
+day of the month 
+1..31 
+ 
+418xx+1 Start month 
+ 
+Start date for disable of the feature  
+month 
+1..12 
+ 
+418xx+2 End day 
+ 
+End date for disable of the feature  
+day of the month 
+1..31 
+ 
+418xx+3 End month 
+ 
+End date for disable of the feature  
+month 
+1..12 
+ 
+ 
+If these 4 registers are configured, the feature is disabled from the start date up to (and including) the end date.   
+Set any of these to 0 to disable seasonal management of this feature. 
+ 
+ 
+4.3.7.2 Season management mapping 
+ 
+Register Read / 
+Write 
+Type Description Accepted 
+values 
+41804..41807 R/W E1 Season disable of the post heating: 
+For BA+ and KWext options 
+ 
+41804: Start date: day-of-month, 1..31 
+41805: Start date: month, 1..12 
+41806: End date: day-of-month, 1..31 
+41807: End date: month, 1..12 
+ 
+Set any of these to 0 to disable seasonal management of the 
+post heating. 
+ 
+41808..41811 R/W E1 Season disable of the cooling: 
+For BA- and BA+/- options 
+ 
+41808: Start date: day-of-month, 1..31 
+41809: Start date: month, 1..12 
+41810: End date: day-of-month, 1..31 
+41811: End date: month, 1..12 
+ 
+Set any of these to 0 to disable seasonal management of the 
+cooling. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+_____________________________________________________________________________________ 
+Although we put a lot of care in the making of our documentation, we cannot be held responsible for any error and/or 
+omissions that could have slipped in. 
+
+ 
+ 
+                  20210920- Cid 050338 
+ 
+SWEGON 
+ 
+Parc Industriel de Sauvenière, 102, Chaussée de Tirlemont, B-5030 GEMBLOUX 
+ 
+TEL. : +32 (0) 81 62 52 52, FAX : +32 (0) 81 62 52 53 
+ 
+www.swegon.com 
+ 
+ 
+        
