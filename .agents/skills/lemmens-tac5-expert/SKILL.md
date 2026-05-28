@@ -52,3 +52,12 @@ Disponible uniquement en modes CA et LS. La VMC mémorise une "pression de réf�
 L'environnement dans lequel vous évoluez permet d'utiliser directement la commande `ha` (Home Assistant CLI) dans le terminal (système Home Assistant OS).
 - Pour appliquer les changements de code du composant, n'hésitez pas à utiliser `ha core restart` ou la commande Docker `docker restart homeassistant`.
 - Pour vérifier les erreurs, vous pouvez consulter les logs avec `ha core logs` ou utiliser directement l'accès au conteneur.
+
+## Processus de Développement et Git
+- **Branche de travail** : Ne JAMAIS travailler directement sur la branche `main`. Tous les développements, tests et corrections doivent être faits sur la branche `dev` (ou une branche spécifique de *feature*).
+- **Stabilité** : La branche `main` est strictement réservée à la version stable et fonctionnelle. C'est cette branche qui est utilisée par les utilisateurs via HACS.
+- **Workflow** : 
+  1. Basculer sur `dev` (`git checkout dev`).
+  2. Coder et tester localement avec Home Assistant.
+  3. Faire les `commit` et `push` sur la branche `dev`.
+  4. Créer une *Pull Request* sur GitHub pour fusionner `dev` vers `main` uniquement lorsque la version est stable.
