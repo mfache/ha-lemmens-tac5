@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Lemmens VMC",
+        "description": "Please enter the IP address and Modbus port of your TAC5 regulation board.",
+        "data": {
+          "host": "IP Address (Host)",
+          "port": "Modbus Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the VMC (Check IP and port)",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Device is already configured."
+    }
+  }
+}
