@@ -4,7 +4,7 @@
     "codeowners": ["@user"],
     "config_flow": true,
     "dependencies": [],
-    "documentation": "https://github.com/user/lemmens_tac5",
+    "documentation": "https://github.com/mfache/ha-lemmens-tac5",
     "iot_class": "local_polling",
     "requirements": ["pymodbus"],
     "version": "1.0.0",
