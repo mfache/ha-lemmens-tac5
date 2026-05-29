@@ -28,7 +28,7 @@ class LemmensBypassOverrideSelect(SelectEntity):
 
     def __init__(self, coordinator, entry_id):
         self.coordinator = coordinator
-        self._attr_name = "Bypass Override"
+        self._attr_translation_key = "bypass_override"
         self._attr_unique_id = f"{entry_id}_bypass_override"
         self._attr_options = list(BYPASS_MAP.values())
 

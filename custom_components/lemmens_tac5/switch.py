@@ -37,7 +37,7 @@ class LemmensPowerSwitch(SwitchEntity):
 
     def __init__(self, coordinator, entry_id):
         self.coordinator = coordinator
-        self._attr_name = "Marche/Arrêt VMC"
+        self._attr_translation_key = "power"
         self._attr_unique_id = f"{entry_id}_power"
         self._attr_icon = "mdi:power"
 
@@ -91,7 +91,7 @@ class LemmensPressureAlarmSwitch(SwitchEntity):
 
     def __init__(self, coordinator, entry_id):
         self.coordinator = coordinator
-        self._attr_name = "Activation Alarme Pression (Filtres)"
+        self._attr_translation_key = "pressure_alarm_enabled"
         self._attr_unique_id = f"{entry_id}_pressure_alarm_enabled"
         self._attr_icon = "mdi:alarm-light"
 

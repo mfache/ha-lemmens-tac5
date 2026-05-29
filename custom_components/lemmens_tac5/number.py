@@ -66,7 +66,7 @@ class LemmensAirflowNumber(NumberEntity):
         self.coordinator = coordinator
         self.key = key
         self.register = register
-        self._attr_name = name
+        self._attr_translation_key = key
         self._attr_unique_id = f"{entry_id}_{key}"
         self._attr_native_unit_of_measurement = (
             UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR
@@ -113,7 +113,7 @@ class LemmensRatioNumber(NumberEntity):
         self.coordinator = coordinator
         self.key = key
         self.register = register
-        self._attr_name = name
+        self._attr_translation_key = key
         self._attr_unique_id = f"{entry_id}_{key}"
         self._attr_native_unit_of_measurement = PERCENTAGE
         self._attr_native_step = 1
@@ -158,7 +158,7 @@ class LemmensDeltaPNumber(NumberEntity):
         self.coordinator = coordinator
         self.key = key
         self.register = register
-        self._attr_name = name
+        self._attr_translation_key = key
         self._attr_unique_id = f"{entry_id}_{key}"
         self._attr_native_unit_of_measurement = "Pa"
         self._attr_native_step = 5

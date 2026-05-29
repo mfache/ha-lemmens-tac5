@@ -17,5 +17,42 @@
     "abort": {
       "already_configured": "Device is already configured."
     }
+  },
+  "entity": {
+    "sensor": {
+      "t1": { "name": "Fresh Air Temp (T1)" },
+      "t2": { "name": "Stale Air Temp (T2)" },
+      "t3": { "name": "Exhaust Air Temp (T3)" },
+      "t5": { "name": "Supply Air Temp (T5)" },
+      "supply_flow": { "name": "Supply Airflow" },
+      "exhaust_flow": { "name": "Exhaust Airflow" },
+      "supply_pressure": { "name": "Supply Pressure" },
+      "exhaust_pressure": { "name": "Exhaust Pressure" },
+      "ref_flow_supply": { "name": "Calibration Supply Airflow" },
+      "ref_flow_exhaust": { "name": "Calibration Exhaust Airflow" },
+      "ref_pressure_supply": { "name": "Calibration Supply Pressure" },
+      "ref_pressure_exhaust": { "name": "Calibration Exhaust Pressure" },
+      "filter_wear_supply": { "name": "Supply Filter Wear" },
+      "filter_wear_exhaust": { "name": "Exhaust Filter Wear" },
+      "mode": { "name": "Working Mode" },
+      "bypass": { "name": "Bypass Status" },
+      "alarms": { "name": "Alarms" }
+    },
+    "number": {
+      "airflow_1": { "name": "Supply Airflow Setting" },
+      "unbalance_ratio": { "name": "Exhaust/Supply Ratio" },
+      "pressure_alarm_delta_supply": { "name": "Supply Filter Alarm Margin" },
+      "pressure_alarm_delta_exhaust": { "name": "Exhaust Filter Alarm Margin" }
+    },
+    "switch": {
+      "power": { "name": "VMC Power" },
+      "pressure_alarm_enabled": { "name": "Filter Pressure Alarm" }
+    },
+    "button": {
+      "calibrate_filters": { "name": "Calibrate New Filters" }
+    },
+    "select": {
+      "bypass_override": { "name": "Bypass Override" }
+    }
   }
 }

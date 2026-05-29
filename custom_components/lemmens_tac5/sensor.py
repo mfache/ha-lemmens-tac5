@@ -159,7 +159,7 @@ class LemmensSensor(SensorEntity):
         """Initialise le capteur avec ses caractéristiques."""
         self.coordinator = coordinator
         self.key = key
-        self._attr_name = name
+        self._attr_translation_key = key
         self._attr_unique_id = f"{entry_id}_{key}"
         self._attr_device_class = device_class
         self._attr_native_unit_of_measurement = unit

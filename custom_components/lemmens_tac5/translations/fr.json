@@ -17,5 +17,42 @@
     "abort": {
       "already_configured": "Cet appareil est déjà configuré."
     }
+  },
+  "entity": {
+    "sensor": {
+      "t1": { "name": "Température Air Neuf (T1)" },
+      "t2": { "name": "Température Air Vicié (T2)" },
+      "t3": { "name": "Température Air Rejeté (T3)" },
+      "t5": { "name": "Température Air Pulsion (T5)" },
+      "supply_flow": { "name": "Débit Pulsion" },
+      "exhaust_flow": { "name": "Débit Extraction" },
+      "supply_pressure": { "name": "Pression Pulsion" },
+      "exhaust_pressure": { "name": "Pression Extraction" },
+      "ref_flow_supply": { "name": "Débit Calibrage Pulsion" },
+      "ref_flow_exhaust": { "name": "Débit Calibrage Extraction" },
+      "ref_pressure_supply": { "name": "Seuil Alarme Pression Pulsion" },
+      "ref_pressure_exhaust": { "name": "Seuil Alarme Pression Extraction" },
+      "filter_wear_supply": { "name": "Encrassement Filtre Pulsion" },
+      "filter_wear_exhaust": { "name": "Encrassement Filtre Extraction" },
+      "mode": { "name": "Mode de Fonctionnement" },
+      "bypass": { "name": "Statut Bypass" },
+      "alarms": { "name": "Alarmes" }
+    },
+    "number": {
+      "airflow_1": { "name": "Consigne Pulsion" },
+      "unbalance_ratio": { "name": "Ratio Extraction/Pulsion" },
+      "pressure_alarm_delta_supply": { "name": "Marge Alarme Filtre Pulsion" },
+      "pressure_alarm_delta_exhaust": { "name": "Marge Alarme Filtre Extraction" }
+    },
+    "switch": {
+      "power": { "name": "Marche/Arrêt VMC" },
+      "pressure_alarm_enabled": { "name": "Surveillance Filtres" }
+    },
+    "button": {
+      "calibrate_filters": { "name": "Calibrer Filtres Neufs" }
+    },
+    "select": {
+      "bypass_override": { "name": "Forçage Bypass" }
+    }
   }
 }

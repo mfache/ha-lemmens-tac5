@@ -24,7 +24,7 @@ class LemmensCalibrateFilterButton(ButtonEntity):
 
     def __init__(self, coordinator, entry_id):
         self.coordinator = coordinator
-        self._attr_name = "Calibrer Filtres Neufs"
+        self._attr_translation_key = "calibrate_filters"
         self._attr_unique_id = f"{entry_id}_calibrate_filters"
         self._attr_icon = "mdi:filter-check"
 
