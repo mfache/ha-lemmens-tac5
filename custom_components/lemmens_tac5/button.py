@@ -1,14 +1,25 @@
+"""
+Composant 'Button' pour Lemmens TAC5.
+Fournit des boutons d'action (comme le calibrage manuel des filtres).
+"""
+
 from homeassistant.components.button import ButtonEntity
 
 from .const import DOMAIN, REG_ALARM_INIT, REG_ALARM_INIT_FLOW
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
+    """Configuration des entités Button à partir de l'entrée de configuration."""
     coordinator = entry.runtime_data
     async_add_entities([LemmensCalibrateFilterButton(coordinator, entry.entry_id)])
 
 
 class LemmensCalibrateFilterButton(ButtonEntity):
+    """
+    Bouton permettant de lancer la procédure de calibrage de pression
+    pour l'alarme d'encrassement des filtres.
+    """
+
     _attr_has_entity_name = True
 
     def __init__(self, coordinator, entry_id):
@@ -24,6 +35,11 @@ class LemmensCalibrateFilterButton(ButtonEntity):
         }
 
     async def async_press(self) -> None:
+        """
+        Action déclenchée lors de l'appui sur le bouton.
+        Lit le débit de pulsion actuel, le définit comme cible de calibrage,
+        puis lance l'initialisation de la VMC.
+        """
         # On définit le débit de référence pour la calibration au débit actuel de pulsion
         current_airflow = self.coordinator.data.get(
             "airflow_1", 200

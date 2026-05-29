@@ -1,3 +1,9 @@
+"""
+Composant 'Number' pour Lemmens TAC5.
+Affiche des champs de saisie numériques permettant de modifier
+les consignes de la VMC (Débits, Ratios, Marges d'alarme).
+"""
+
 from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.const import PERCENTAGE, UnitOfVolumeFlowRate
 
@@ -11,6 +17,7 @@ from .const import (
 
 
 async def async_setup_entry(hass, entry, async_add_entities):
+    """Configuration des entités Number à partir de l'entrée de configuration."""
     coordinator = entry.runtime_data
 
     numbers = [
@@ -48,6 +55,11 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
 
 class LemmensAirflowNumber(NumberEntity):
+    """
+    Entité permettant de définir la consigne de pulsion en m3/h.
+    Modifie le registre REG_AIRFLOW_SETTING_1.
+    """
+
     _attr_has_entity_name = True
 
     def __init__(self, coordinator, entry_id, key, name, register):
@@ -73,20 +85,28 @@ class LemmensAirflowNumber(NumberEntity):
 
     @property
     def native_value(self):
+        """Retourne la valeur actuelle depuis le coordinateur."""
         return self.coordinator.data.get(self.key)
 
     async def async_set_native_value(self, value: float) -> None:
+        """Envoie la nouvelle consigne via Modbus et met à jour l'état local."""
         await self.coordinator.async_write_register(self.register, int(value))
         self.coordinator.data[self.key] = int(value)
         self.async_write_ha_state()
 
     async def async_added_to_hass(self):
+        """S'abonne aux mises à jour du coordinateur."""
         self.async_on_remove(
             self.coordinator.async_add_listener(self.async_write_ha_state)
         )
 
 
 class LemmensRatioNumber(NumberEntity):
+    """
+    Entité permettant de définir le ratio Extraction/Pulsion en %.
+    Modifie le registre REG_UNBALANCE_RATIO.
+    """
+
     _attr_has_entity_name = True
 
     def __init__(self, coordinator, entry_id, key, name, register):
@@ -110,20 +130,28 @@ class LemmensRatioNumber(NumberEntity):
 
     @property
     def native_value(self):
+        """Retourne le ratio actuel."""
         return self.coordinator.data.get(self.key)
 
     async def async_set_native_value(self, value: float) -> None:
+        """Envoie le nouveau ratio via Modbus."""
         await self.coordinator.async_write_register(self.register, int(value))
         self.coordinator.data[self.key] = int(value)
         self.async_write_ha_state()
 
     async def async_added_to_hass(self):
+        """S'abonne aux mises à jour du coordinateur."""
         self.async_on_remove(
             self.coordinator.async_add_listener(self.async_write_ha_state)
         )
 
 
 class LemmensDeltaPNumber(NumberEntity):
+    """
+    Entité permettant de définir la marge de tolérance (Delta P) en Pascals
+    avant le déclenchement de l'alarme filtre.
+    """
+
     _attr_has_entity_name = True
 
     def __init__(self, coordinator, entry_id, key, name, register):
@@ -148,14 +176,17 @@ class LemmensDeltaPNumber(NumberEntity):
 
     @property
     def native_value(self):
+        """Retourne la marge actuelle."""
         return self.coordinator.data.get(self.key)
 
     async def async_set_native_value(self, value: float) -> None:
+        """Envoie la nouvelle marge via Modbus."""
         await self.coordinator.async_write_register(self.register, int(value))
         self.coordinator.data[self.key] = int(value)
         self.async_write_ha_state()
 
     async def async_added_to_hass(self):
+        """S'abonne aux mises à jour du coordinateur."""
         self.async_on_remove(
             self.coordinator.async_add_listener(self.async_write_ha_state)
         )
